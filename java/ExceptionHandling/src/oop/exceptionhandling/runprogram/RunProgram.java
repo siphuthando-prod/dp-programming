@@ -105,7 +105,7 @@ public class RunProgram {
        }
        
        int dob = Integer.parseInt(ID.substring(0, 3));
-       int actYear = 0;
+       int actYear ;
        if(dob < 26){
            dob += 2000;
            actYear = 2026 - dob;
