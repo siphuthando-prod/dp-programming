@@ -1,6 +1,8 @@
 
 package basicframeapp;
 
+import za.ac.tut.ui.MyFirstFrame;
+
 /**
  *
  * @author S. X Mabuza
@@ -8,7 +10,11 @@ package basicframeapp;
 public class BasicFrameApp {
 
     public static void main(String[] args) {
-        // TODO code application logic here
+        //DECLARING FRAME+++++++++++++++++++++++++
+        MyFirstFrame myFrame;
+        
+        //INSTANTIATING FRAME++++++++++++++++++++
+        myFrame = new MyFirstFrame();
     }
     
 }
