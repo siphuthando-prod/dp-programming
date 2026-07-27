@@ -3,6 +3,8 @@ package za.ac.tut.frames;
 //IMPORT STATEMENTS+++++++++++++++++++++++++++++++++++++++
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,5 +45,18 @@ public class PasswordGUI extends JFrame {
         this.setTitle("User login page");
         this.setSize(200, 250);
         this.setBackground(Color.BLUE);
+        
+        //Creating panels++++++++++++++++++++++++++++++++++++++++++++++
+        this.usernamePnl = new JPanel(new FlowLayout());
+        this.passwordPnl = new JPanel(new FlowLayout());        
+        this.usernameAndPasswordPnl = new JPanel(new GridLayout(2,1));
+        
+        this.titlePnl = new JPanel(new FlowLayout());
+        
+        this.headingPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        
+        this.btnsPnl = new JPanel(new FlowLayout());
+        this.mainPnl = new JPanel(new FlowLayout());
+        
     }
 }
