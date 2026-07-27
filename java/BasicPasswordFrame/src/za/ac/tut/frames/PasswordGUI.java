@@ -64,6 +64,11 @@ public class PasswordGUI extends JFrame {
         this.usernameLbl = new JLabel("Username: ");
         this.passwordLbl = new JLabel("Password: ");
         
+        //Creating text fields++++++++++++++++++++++++++++++++++++++++++
+        this.usernameTxtFld = new JTextField(20);
+        this.passwordTxtFld = new JTextField(20);
         
+        //Creating button++++++++++++++++++++++++++++++++++++++++++++++
+        this.submitBtn = new JButton("Submit");
     }
 }
