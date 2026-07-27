@@ -69,6 +69,54 @@ public class GreetingsGUI extends JFrame {
             headingPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
             headingPnl.setBorder(new BevelBorder(BevelBorder.RAISED));
             
+            //CREATING THE LABELS+++++++++++++++++++++++++++++++
+            headingLbl = new JLabel("Greetings App");
+            nameLbl = new JLabel("Name: ");
+            surnameLbl = new JLabel("Surname: ");
             
+            //CREATING TEXT FIELDS+++++++++++++++++++++++++++++++
+            nameTxtFld = new JTextField(20);
+            surnameTxtFld = new JTextField(20);
+            
+            //CREATING TEXT AREAS++++++++++++++++++++++++++++++++
+            greetingsTxtArea = new JTextArea(40, 50);
+            greetingsTxtArea.setEditable(false);
+            this.greetingsTxtArea.setText("Hello [name] [surname]");
+            
+            //CREATING BUTTONS+++++++++++++++++++++++++++++++++++++
+            this.greetBtn = new JButton("Greet");
+            this.clearBtn = new JButton("Clear");
+            this.exitBtn = new JButton("Exit");
+            
+            //adding name label textfield to the name panel++++++++++++++++++++++++++++++
+            this.namePnl.add(this.nameLbl);
+            this.namePnl.add(this.nameTxtFld);
+            
+            //adding label textfield to the surname panel+++++++++++++++++++++++++++++++
+            this.surnamePnl.add(this.surnameLbl);
+            this.surnamePnl.add(this.surnameTxtFld);
+            
+            //adding the name and surname panels to the collective panel+++++++++++++++++
+            this.nameAndSurnamePnl.add(this.namePnl);
+            this.nameAndSurnamePnl.add(this.surnamePnl);
+            
+            //adding greetings area to its panel++++++++++++++++++++++++++++++++++++
+            this.greetingsAreaPnl.add(this.greetingsTxtArea);
+            
+            //adding buttons to their panels+++++++++++++++++++++++++++++++++++++++
+            this.btnsPnl.add(this.greetBtn);
+            this.btnsPnl.add(this.clearBtn);
+            this.btnsPnl.add(this.exitBtn);
+            
+            //adding all the panels to the main panel+++++++++++++++++++++++++++++++++
+            this.mainPnl.add(this.nameAndSurnamePnl, BorderLayout.NORTH);
+            this.mainPnl.add(this.greetingsAreaPnl, BorderLayout.CENTER);
+            this.mainPnl.add(this.btnsPnl, BorderLayout.SOUTH);
+            
+            this.add(this.headingPnl, BorderLayout.NORTH);
+            this.add(this.mainPnl, BorderLayout.CENTER);
+            
+            //Making frame visible++++++++++++++++++++++++++++++++++++++++++++++
+            this.setVisible(true);
         }
 }
