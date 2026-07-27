@@ -42,7 +42,7 @@ public class PasswordGUI extends JFrame {
     public PasswordGUI(){
         //Configuring GUI+++++++++++++++++++++++++++++++++++++++++++++
         this.setLayout(new BorderLayout());
-        this.setTitle("User login page");
+        this.setTitle("Password GUI");
         this.setSize(200, 250);
         this.setBackground(Color.BLUE);
         
@@ -57,6 +57,13 @@ public class PasswordGUI extends JFrame {
         
         this.btnsPnl = new JPanel(new FlowLayout());
         this.mainPnl = new JPanel(new FlowLayout());
+        
+        //Creating labels+++++++++++++++++++++++++++++++++++++++++++++++
+        this.headingLbl = new JLabel("User login page");
+        this.titleLbl = new JLabel("Login details");
+        this.usernameLbl = new JLabel("Username: ");
+        this.passwordLbl = new JLabel("Password: ");
+        
         
     }
 }
