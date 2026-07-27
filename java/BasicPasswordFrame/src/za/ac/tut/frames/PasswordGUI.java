@@ -1,9 +1,11 @@
 
 package za.ac.tut.frames;
 //IMPORT STATEMENTS+++++++++++++++++++++++++++++++++++++++
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -24,5 +26,13 @@ public class PasswordGUI extends JFrame {
     private JLabel passwordLbl;
     private JLabel titleLbl;
     private JLabel headingLbl;
+    
+    //TEXTFIELDS+++++++++++++++++++++++++++++++++++++++++++++
+    private JTextField usernameTxtFld;
+    private JTextField passwordTxtFld;
+    
+    //BUTTONS++++++++++++++++++++++++++++++++++++++++++++++++
+    private JButton submitBtn;
+    
     
 }
