@@ -1,6 +1,8 @@
 
 package za.ac.tut.frames;
 //IMPORT STATEMENTS+++++++++++++++++++++++++++++++++++++++
+import java.awt.BorderLayout;
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,5 +36,12 @@ public class PasswordGUI extends JFrame {
     //BUTTONS++++++++++++++++++++++++++++++++++++++++++++++++
     private JButton submitBtn;
     
-    
+    //CONSTRUCTOR++++++++++++++++++++++++++++++++++++++++++
+    public PasswordGUI(){
+        //Configuring GUI+++++++++++++++++++++++++++++++++++++++++++++
+        this.setLayout(new BorderLayout());
+        this.setTitle("User login page");
+        this.setSize(200, 250);
+        this.setBackground(Color.BLUE);
+    }
 }
