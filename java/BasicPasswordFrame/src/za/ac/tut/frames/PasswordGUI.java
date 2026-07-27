@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
 
 /**
  *
@@ -54,6 +55,7 @@ public class PasswordGUI extends JFrame {
         this.titlePnl = new JPanel(new FlowLayout());
         
         this.headingPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        this.headingPnl.setBorder(new BevelBorder(BevelBorder.RAISED));
         
         this.btnsPnl = new JPanel(new FlowLayout());
         this.mainPnl = new JPanel(new FlowLayout());
@@ -70,5 +72,28 @@ public class PasswordGUI extends JFrame {
         
         //Creating button++++++++++++++++++++++++++++++++++++++++++++++
         this.submitBtn = new JButton("Submit");
+        
+        //Adding username label & textfield to the panel++++++++++++++++++++++++++++
+        this.usernamePnl.add(this.usernameLbl);
+        this.usernamePnl.add(this.usernameTxtFld);
+        
+        //Adding password label & textfield to the panel++++++++++++++++++++++++++++
+        this.passwordPnl.add(this.passwordLbl);
+        this.passwordPnl.add(this.passwordTxtFld);
+        
+        //Adding username and password panels to the collective panel+++++++++++++++++++++
+        this.usernameAndPasswordPnl.add(this.usernamePnl);
+        this.usernameAndPasswordPnl.add(this.passwordPnl);
+        
+        //Adding title label to the panel++++++++++++++++++++++++++++++++++++++++++++
+        this.titlePnl.add(this.titleLbl);
+        
+        //Adding heading label to the panel++++++++++++++++++++++++++++++++++++++++++
+        this.headingPnl.add(this.headingLbl);
+        
+        //Adding button label to the panel+++++++++++++++++++++++++++++++++++++++++++
+        this.btnsPnl.add(this.submitBtn);
+        
+        
     }
 }
