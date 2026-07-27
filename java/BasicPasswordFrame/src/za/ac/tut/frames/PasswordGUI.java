@@ -2,6 +2,7 @@
 package za.ac.tut.frames;
 //IMPORT STATEMENTS+++++++++++++++++++++++++++++++++++++++
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -17,5 +18,11 @@ public class PasswordGUI extends JFrame {
     private JPanel headingPnl;
     private JPanel btnsPnl;
     private JPanel mainPnl;
+    
+    //LABELS++++++++++++++++++++++++++++++++++++++++++++++++++
+    private JLabel usernameLbl;
+    private JLabel passwordLbl;
+    private JLabel titleLbl;
+    private JLabel headingLbl;
     
 }
