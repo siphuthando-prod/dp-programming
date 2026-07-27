@@ -2,6 +2,9 @@
 package za.ac.tut.ui;
 
 //IMPORT STATEMENTS++++++++++++++++++++++++++++++++++++++++++
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -13,6 +16,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -23,6 +28,7 @@ public class GymMembershipFrame extends JFrame {
     private JPanel headingPnl;
     private JPanel clientPnl;
     private JPanel namePnl;
+    private JPanel surnamePnl;
     private JPanel idNoPnl;
     private JPanel genderPnl;
     private JPanel contractPnl;
@@ -71,5 +77,21 @@ public class GymMembershipFrame extends JFrame {
     //Private button++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private JButton applyBtn;
     
-    
+    //CONSTRUCTOR+++++++++++++++++++++++++++++++++++++++++++++++++
+    public GymMembershipFrame(){
+        //Configuring frame++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.setTitle("Gym membership");
+        this.setSize(500, 500);
+        
+        //Creatnig Panels+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.headingPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        
+        this.clientPnl = new JPanel(new GridLayout(4, 1, 1, 1));
+        this.clientPnl.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 1), "Client Details"));
+        
+        this.namePnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        this.surnamePnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        this.idNoPnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        this.genderPnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    }
 }
