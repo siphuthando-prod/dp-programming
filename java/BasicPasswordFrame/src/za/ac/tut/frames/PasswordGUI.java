@@ -94,6 +94,16 @@ public class PasswordGUI extends JFrame {
         //Adding button label to the panel+++++++++++++++++++++++++++++++++++++++++++
         this.btnsPnl.add(this.submitBtn);
         
+        //Adding all panels to the main panel+++++++++++++++++++++++++++++++++++
+        this.mainPnl.add(this.titlePnl, BorderLayout.NORTH);
+        this.mainPnl.add(this.usernameAndPasswordPnl, BorderLayout.CENTER);
+        this.mainPnl.add(this.btnsPnl, BorderLayout.SOUTH);
         
+        //Adding panels to the frame+++++++++++++++++++++++++++++++++++++++++
+        this.add(this.headingLbl, BorderLayout.NORTH);
+        this.add(this.mainPnl, BorderLayout.CENTER);
+        
+        //Making the frame visible+++++++++++++++++++++++++++++++++++++++++++++++++
+        this.setVisible(true);
     }
 }
