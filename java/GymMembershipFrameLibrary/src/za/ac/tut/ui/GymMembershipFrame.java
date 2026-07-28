@@ -5,6 +5,7 @@ package za.ac.tut.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -107,5 +109,53 @@ public class GymMembershipFrame extends JFrame {
         this.headingClientCombinedPnl = new JPanel(new BorderLayout());
         this.membershipCommentsCombinedPnl = new JPanel(new BorderLayout());
         this.mainPnl = new JPanel(new BorderLayout());
+        
+        //Creating Labels+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.headingLbl = new JLabel("Membership Form");
+        this.headingLbl.setFont(new Font(Font.SANS_SERIF, Font.ITALIC + Font.BOLD, 20));
+        this.headingLbl.setForeground(Color.BLUE);
+        this.headingLbl.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+        
+        this.nameLbl = new JLabel("Name:                ");
+        this.surnameLbl = new JLabel("Surname:    ");
+        this.idNoLbl = new JLabel("Id no:                  ");
+        this.genderLbl = new JLabel("Gender:        ");
+        this.contractTypeLbl = new JLabel("Type of contract:    ");
+        this.peresonalTrainerLbl = new JLabel("Select the checkbox if you need a personal trainer ");
+        
+        //Creating textfields++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.nameTxtFld = new JTextField(10);
+        this.surnameTxtFld = new JTextField(10);
+        this.idNoTxtFld = new JTextField(10);
+        
+        //Creating combobox++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.genderComboBox = new JComboBox();
+        this.genderComboBox.addItem("Male");
+        this.genderComboBox.addItem("Female");
+        
+        //Creating radio buttons++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.monthToMonthRadBtn = new JRadioButton("Month-to-month");
+        this.sixMonthsRadBtn = new JRadioButton("Six months");
+        this.annualRadBtn = new JRadioButton("Annual");
+        
+        //Creating checkbox++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.personalTrainerChkBx = new JCheckBox();
+        
+        //Creating button group++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.btnGrp = new ButtonGroup();
+        this.btnGrp.add(this.monthToMonthRadBtn);
+        this.btnGrp.add(this.sixMonthsRadBtn);
+        this.btnGrp.add(this.annualRadBtn);
+        
+        //Creating text area+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+        this.commentsArea = new JTextArea(20, 40);
+        this.commentsArea.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 1), "Comments"));
+        
+        this.scrollableTxtArea = new JScrollPane(this.commentsArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                                                                                                            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        
+        //Creating button+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.applyBtn = new JButton("Apply");
+        
     }
 }
