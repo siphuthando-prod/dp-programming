@@ -2,6 +2,7 @@
 package za.ac.tut.ui;
 
 //IMPORT STATEMENTS++++++++++++++++++++++++++++++++++++++++++
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -31,7 +32,7 @@ public class GymMembershipFrame extends JFrame {
     private JPanel surnamePnl;
     private JPanel idNoPnl;
     private JPanel genderPnl;
-    private JPanel contractPnl;
+    private JPanel contractsPnl;
     private JPanel personalTrainerOptionPnl;
     private JPanel membershipPnl;
     private JPanel commentsPnl;
@@ -93,5 +94,18 @@ public class GymMembershipFrame extends JFrame {
         this.surnamePnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
         this.idNoPnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
         this.genderPnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
+        this.contractsPnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        this.personalTrainerOptionPnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
+        this.membershipPnl = new JPanel(new GridLayout(2, 1, 1, 1));
+        this.membershipPnl.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 1)));
+        
+        this.commentsPnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
+        this.btnsPnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        this.headingClientCombinedPnl = new JPanel(new BorderLayout());
+        this.membershipCommentsCombinedPnl = new JPanel(new BorderLayout());
+        this.mainPnl = new JPanel(new BorderLayout());
     }
 }
