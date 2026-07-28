@@ -157,5 +157,55 @@ public class GymMembershipFrame extends JFrame {
         //Creating button+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         this.applyBtn = new JButton("Apply");
         
+        //Adding components to panels++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.headingPnl.add(this.headingLbl);   //--> first collective panel
+        
+        this.namePnl.add(this.nameLbl);
+        this.namePnl.add(this.nameTxtFld);
+        
+        this.surnamePnl.add(this.surnameLbl);
+        this.surnamePnl.add(this.surnameTxtFld);
+        
+        this.idNoPnl.add(this.idNoLbl);
+        this.idNoPnl.add(this.idNoTxtFld);
+        
+        this.genderPnl.add(this.genderLbl);
+        this.genderPnl.add(this.genderComboBox);
+        
+        this.clientPnl.add(this.namePnl);   //--> Second collective panel
+        this.clientPnl.add(this.surnamePnl);
+        this.clientPnl.add(this.idNoPnl);
+        this.clientPnl.add(this.genderPnl);
+        
+        this.headingClientCombinedPnl.add(this.headingPnl, BorderLayout.NORTH);
+        this.headingClientCombinedPnl.add(this.clientPnl, BorderLayout.CENTER);
+        
+        this.contractsPnl.add(this.contractTypeLbl);
+        this.contractsPnl.add(this.monthToMonthRadBtn);     //--> Third collective panel
+        this.contractsPnl.add(this.sixMonthsRadBtn);
+        this.contractsPnl.add(this.annualRadBtn);
+        
+        this.personalTrainerOptionPnl.add(this.peresonalTrainerLbl);
+        this.personalTrainerOptionPnl.add(this.personalTrainerChkBx);
+        
+        this.membershipPnl.add(this.contractsPnl);
+        this.membershipPnl.add(this.personalTrainerOptionPnl);
+        
+        this.commentsPnl.add(this.scrollableTxtArea);
+        
+        this.membershipCommentsCombinedPnl.add(this.membershipPnl, BorderLayout.NORTH);
+        this.membershipCommentsCombinedPnl.add(this.commentsPnl,
+                                                                                                                           BorderLayout.CENTER);
+        
+        this.btnsPnl.add(this.applyBtn);
+        
+        this.mainPnl.add(this.headingClientCombinedPnl, BorderLayout.NORTH);
+        this.mainPnl.add(this.membershipCommentsCombinedPnl, BorderLayout.CENTER);
+        this.mainPnl.add(this.btnsPnl, BorderLayout.SOUTH);
+        
+        add(this.mainPnl);
+        
+        pack();
+        setVisible(true);
     }
 }
