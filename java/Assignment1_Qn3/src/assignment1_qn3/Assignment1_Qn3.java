@@ -2,6 +2,7 @@
 package assignment1_qn3;
 
 import java.text.DecimalFormat;
+import java.util.Scanner;
 
 /**
  *
@@ -12,6 +13,7 @@ public class Assignment1_Qn3 {
     public static void main(String[] args) {
         // Instantiating Objects+++++++++++++++++++++++++++++++++++++++++++++++++
         DecimalFormat df = new DecimalFormat("###,###.00");
+        Scanner kb = new Scanner(System.in);
         
         Circle circle = new Circle();
         double area = circle.calcArea();
@@ -26,6 +28,25 @@ public class Assignment1_Qn3 {
         circum = circle2.calcCircumference();
         System.out.println("Area of " + circle2.getColor() + " cicle: " + df.format(area));
         System.out.println("Circumference of " + circle2.getColor() + " cicle: " + df.format(circum));
+        
+        //HANDLING SQUARE ROOT+++++++++++++++++++++++++++++++++++++++++++++
+        int number = 0;
+        double sRoot = 0;
+        
+        try{
+            System.out.print("Enter a number: ");
+            number = kb.nextInt();
+            
+            if(number < 0){
+                throw new NegativeNumberException("Can't compute square-root of a negative number!");
+            }
+             sRoot = Math.sqrt(number);
+             System.out.println("Square root of " + number + " is: " + sRoot);
+        }
+        catch(NegativeNumberException e){
+            System.out.println(e.getMessage());
+        }
+                        
     }
     
 }
