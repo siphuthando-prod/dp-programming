@@ -6,9 +6,9 @@ package za.ac.tut.question8.employee;
  * @author S. X Mabuza
  */
 public abstract class Employee {
-    //PRIVATE MEMBERS++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    private String name;
-    private double salary;
+    //PROTECTED MEMBERS++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    protected String name;
+   protected double salary;
     
     //CONSTRUCTOR+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public Employee(String name, double salary){
@@ -17,7 +17,5 @@ public abstract class Employee {
     }
     
     //PUBLIC METHODS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public void displayDetails(){
-    
-    };
+    public abstract void displayDetails();
 }
