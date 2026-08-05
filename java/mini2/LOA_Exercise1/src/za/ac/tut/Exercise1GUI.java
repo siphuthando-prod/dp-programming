@@ -1,0 +1,109 @@
+package za.ac.tut;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+/**
+ *
+ * @author S. X Mabuza
+ */
+public class Exercise1GUI extends JFrame{
+    private final JTextField tfSentence;
+    private final JButton btnProcess;
+    private final JLabel lblSentence;
+    private final JButton btnGenerate;
+    private final JTextArea taPronicOutput;
+    private final JButton btnProduct;
+    
+    public Exercise1GUI(){
+        setTitle("Assignment 1 - Practice");
+        setSize(450, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        
+        JPanel upper = new JPanel(new GridLayout(2,1,0,0));
+        upper.setBorder(javax.swing.BorderFactory.createTitledBorder("Question 1 - sentence manipulation"));
+        
+        JPanel mPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        tfSentence = new JTextField("TalK is chEAp, SHOW me tHe Code");
+        tfSentence.setEditable(false);
+        tfSentence.setFont(new Font("Comic Sans", Font.BOLD, 15));
+        
+        btnProcess = new JButton("Process sentence");
+        btnProcess.setBackground(Color.GREEN);
+        btnProcess.addActionListener(new BtnProcessClick());
+        mPnl.add(tfSentence);
+        mPnl.add(btnProcess);
+        
+        lblSentence = new JLabel("Display processed sentence here");
+        lblSentence.setFont(new Font("Times New Roman", Font.BOLD, 15));
+        lblSentence.setHorizontalAlignment(JLabel.CENTER);
+        upper.add(mPnl);
+        upper.add(lblSentence);
+        
+        add(upper, BorderLayout.NORTH);
+        
+        JPanel below = new JPanel(new GridLayout(1, 1));
+        below.setBorder(javax.swing.BorderFactory.createTitledBorder("Question 2 - number works"));
+        
+        btnGenerate = new JButton("Generate");
+        btnGenerate.addActionListener(new BtnGenerateClick());
+        btnGenerate.setBackground(Color.ORANGE);
+        btnProduct = new JButton("Find Product");
+        btnProduct.setBackground(Color.MAGENTA);
+        btnProduct.addActionListener(new BtnProductClick());
+        
+        taPronicOutput = new JTextArea(10, 10);
+        mPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        mPnl.add(btnGenerate);
+        mPnl.add(taPronicOutput);
+        mPnl.add(btnProduct);
+        
+        below.add(mPnl);
+        
+        add(below, BorderLayout.CENTER);
+        
+        pack();
+        setVisible(true);
+    }
+
+    private class BtnProcessClick implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //write code here for btnProcess
+        }
+    }
+    
+    private class BtnGenerateClick implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //write code here btnGenerate
+            
+        }
+    }
+    
+    private class BtnProductClick implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           //write code for btnProduct
+        }
+    }
+    
+    public static void main(String[] args){ new Exercise1GUI(); }
+
+    
+}
