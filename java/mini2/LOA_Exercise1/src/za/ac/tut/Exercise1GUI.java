@@ -82,7 +82,23 @@ public class Exercise1GUI extends JFrame{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //write code here for btnProcess
+            //Reading sentence from text field+++++++++++++++++++
+            String sentence = tfSentence.getText();
+            //Separating sentence into words++++++++++++++++++++++++++++
+            String[] words = sentence.split(",\\s+");
+            //Dertemining number of letters in each word+++++++++++++++++++++++++++
+            int nrLetters = 0;
+            String processed = "";
+            for (String word : words) {
+                nrLetters = word.length();
+                processed += word + " " + nrLetters + ", ";
+            }
+            //Placing processed result in label++++++++++++++++++++++++++++++++++++
+            lblSentence.setText(processed);
+            //Setting label foreground colour++++++++++++++++++++++++
+            lblSentence.setForeground(Color.red);
+            //Setting result label font++++++++++++++++++++++++++++
+            lblSentence.setFont(new Font("Comic Sans", Font.BOLD, 15));            
         }
     }
     
