@@ -29,6 +29,7 @@ public class Exercise1GUI extends JFrame{
     private final JButton btnGenerate;
     private final JTextArea taPronicOutput;
     private final JButton btnProduct;
+    private final SenteNumberProcessor processor = new SenteNumberProcessor();
     
     public Exercise1GUI(){
         setTitle("Assignment 1 - Practice");
@@ -115,9 +116,11 @@ public class Exercise1GUI extends JFrame{
             
             if(userIn == null){
                 JOptionPane.showMessageDialog(null, "Operation cancelled");
+                return;
             }
             else if(userIn.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Please enter a value");
+                return;
             }
             int numPronics = 0;
             
@@ -126,6 +129,7 @@ public class Exercise1GUI extends JFrame{
             }
             catch(NumberFormatException v){
                 JOptionPane.showMessageDialog(null, "Non numeric value entered!!");
+                return;
             }
             
             if(numPronics == 0){
@@ -136,8 +140,7 @@ public class Exercise1GUI extends JFrame{
                 JOptionPane.showMessageDialog(null, "A negative number is NOT allowed!!\nEnter a positive number");
                 return;
             }   
-            //Generating the number of values requested by the user+++++++++++++++++++++
-            SenteNumberProcessor processor = new SenteNumberProcessor();
+            //Generating the number of values requested by the user+++++++++++++++++++++ 
             processor.generatePronicNumbers(numPronics);
                 
             //Clearng text area++++++++++++++++++++++++++++++++++++
@@ -154,7 +157,21 @@ public class Exercise1GUI extends JFrame{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-           //write code for btnProduct
+            //Finding the total number of pronics+++++++++++++++
+           ArrayList<PronicNumber> pNumbers = processor.getNumbers();
+           int total = pNumbers.size();
+            //Determining whether total is even or odd++++++++++++++++++++++++
+            if(total % 2 != 0){
+                JOptionPane.showMessageDialog(null, "There is only one middle value");
+            }
+            else{
+                int midIndex1= (total/2) - 1, midIndex2 =(total/2) ;
+                int mid1 = pNumbers.get(midIndex1).getNumPronics();
+                int mid2 = pNumbers.get(midIndex2).getNumPronics();
+                int product = mid1 * mid2;
+                JOptionPane.showMessageDialog(null, "The 2 middle values are: "
+                                                                                                    + mid1 + " and " + mid2 + "\nThe product is: " + product);
+            }
         }
     }
     
