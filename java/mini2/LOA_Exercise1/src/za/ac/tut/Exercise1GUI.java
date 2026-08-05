@@ -7,12 +7,16 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import za.ac.ex1.tut.PronicNumber;
+import za.ac.ex1.tut.SenteNumberProcessor;
 
 /**
  *
@@ -85,7 +89,7 @@ public class Exercise1GUI extends JFrame{
             //Reading sentence from text field+++++++++++++++++++
             String sentence = tfSentence.getText();
             //Separating sentence into words++++++++++++++++++++++++++++
-            String[] words = sentence.split(",\\s+");
+            String[] words = sentence.split("[,\\s]+");
             //Dertemining number of letters in each word+++++++++++++++++++++++++++
             int nrLetters = 0;
             String processed = "";
@@ -106,8 +110,43 @@ public class Exercise1GUI extends JFrame{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //write code here btnGenerate
+            //Prompting for quantity of pronic numbers++++++++++++++++++++
+            String userIn =JOptionPane.showInputDialog(null, "How many pronic number do you want");
             
+            if(userIn == null){
+                JOptionPane.showMessageDialog(null, "Operation cancelled");
+            }
+            else if(userIn.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Please enter a value");
+            }
+            int numPronics = 0;
+            
+            try{
+                numPronics = Integer.parseInt(userIn);
+            }
+            catch(NumberFormatException v){
+                JOptionPane.showMessageDialog(null, "Non numeric value entered!!");
+            }
+            
+            if(numPronics == 0){
+                JOptionPane.showMessageDialog(null, "Zero is not allowed, type a whole number");
+                return;
+            }
+            else if(numPronics < 0){
+                JOptionPane.showMessageDialog(null, "A negative number is NOT allowed!!\nEnter a positive number");
+                return;
+            }   
+            //Generating the number of values requested by the user+++++++++++++++++++++
+            SenteNumberProcessor processor = new SenteNumberProcessor();
+            processor.generatePronicNumbers(numPronics);
+                
+            //Clearng text area++++++++++++++++++++++++++++++++++++
+            taPronicOutput.setText("");
+            //Adding generated values to text area++++++++++++++++++++++++++++++
+            ArrayList<PronicNumber> pronicNumbers = processor.getNumbers();
+            for (PronicNumber pronicNumber : pronicNumbers) {
+                taPronicOutput.append(pronicNumber.getNumPronics() + "\n");
+            }
         }
     }
     
