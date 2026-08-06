@@ -44,6 +44,17 @@ public class ListExample {
             numbers.forEach(System.out::println);
             System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
             
+            //Adding a number at an occupied index++++++++++++++++++++++++++++++++++
+            System.out.println("Element at index 0 is now changed to a 10");
+            numbers.add(0, 10);
+            numbers.forEach(System.out::println);
+            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+            
+            //REplacing an element at an index+++++++++++++++++++++++++++++++++++++++++++
+            System.out.println("Element at index 0 replaced with 20");
+            numbers.set(0, 20);
+            numbers.forEach(System.out::println);
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             
         }
     }
