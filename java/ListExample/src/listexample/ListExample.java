@@ -27,8 +27,23 @@ public class ListExample {
             numbers.add(5); //names.add("Trace");
             
             //Display the elements+++++++++++++++++++++++++++++++++++++++++++++++
+            System.out.println("++++++++++++++++++");
             numbers.forEach(System.out::println);
             //names.forEach(System.out::println);
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++");
+            
+            //Removing an element+++++++++++++++++++++++++++++++++++++++++++
+            int removedElement = numbers.remove(4);
+            System.out.println("The element " + removedElement + " has been removed");
+            numbers.forEach(System.out::println);
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++");
+            
+            //Getting an element+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            int element = numbers.get(0);
+            System.out.println("The element at index 0 is " + element);
+            numbers.forEach(System.out::println);
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+            
             
         }
     }
