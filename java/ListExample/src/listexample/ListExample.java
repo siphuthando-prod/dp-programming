@@ -56,6 +56,24 @@ public class ListExample {
             numbers.forEach(System.out::println);
             System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             
+            //Checking if an element is contained in the list+++++++++++++++++++++++++++
+            if(numbers.contains(20)){
+                System.out.println(20 + " is present in the list. It occures at index " + numbers.indexOf(20));
+            }else{
+                System.out.println(20 + " is not in the list.");
+            }
+            
+            //Clearing list++++++++++++++++++++++++++
+            numbers.clear();
+            
+            if(numbers.isEmpty()){
+                System.out.println("The list is empty");
+            }
+            else{
+                System.out.println("The list is not empty");
+            }
+        }else{
+            System.out.println("The is not not empty");
         }
     }
     
