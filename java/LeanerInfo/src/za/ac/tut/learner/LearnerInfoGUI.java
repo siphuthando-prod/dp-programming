@@ -3,8 +3,11 @@ package za.ac.tut.learner;
 
 //IMPORT STATEMENTS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -12,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -119,6 +123,45 @@ public class LearnerInfoGUI extends JFrame{
         inputPanel.add(allergyPanel);
         inputPanel.add(buttonPanel);
         
+        //Building Output section+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        JPanel outputPanel = new JPanel(new BorderLayout());
         
+        outputPanel.setBorder(BorderFactory.createMatteBorder(2, 2, 0, 0, Color.YELLOW));
+        
+        JLabel lblOutput = new JLabel("Output Section");
+        
+        this.taOutput = new JTextArea();
+        this.taOutput.setEditable(false);
+        
+        this.taOutput.setLineWrap(false);
+        
+        JScrollPane scrollPane = new JScrollPane(this.taOutput);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        
+        outputPanel.add(lblOutput, BorderLayout.NORTH);
+        outputPanel.add(scrollPane, BorderLayout.CENTER);
+        
+        //Assembling frame++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.add(inputPanel, BorderLayout.NORTH);
+        this.add(outputPanel, BorderLayout.CENTER);
+        
+        this.btnSave.addActionListener(new BtnSaveListener());
+        this.btnClear.addActionListener(new BtnClearListener());
+        
+        this.setVisible(true);
     }
+
+    private static class BtnSaveListener implements ActionListener {
+
+        public BtnSaveListener() {
+        }
+    }
+
+    private static class BtnClearListener implements ActionListener {
+
+        public BtnClearListener() {
+        }
+    }
+
 }
