@@ -13,18 +13,17 @@ public class ListExample {
     public static void main(String[] args) {
         //Dclaring variables++++++++++++++++++++++++++++++++++++++++++++++
         List<Integer> numbers = new ArrayList<>();
-        //List<String> names = new ArrayList<>();
         
         //Check if list is empty++++++++++++++++++++++++++++++++++++++
         if(numbers.isEmpty()){
             System.out.println("The list is empty");
             
             //Adding elements in the list+++++++++++++++++++++++++++++++++++++
-            numbers.add(1); //names.add("sizwe-land");
-            numbers.add(2); //names.add("LiNDA");
-            numbers.add(3); //names.add("HIMTHESUN");
-            numbers.add(4); //names.add("$kywalker");
-            numbers.add(5); //names.add("Trace");
+            numbers.add(1); 
+            numbers.add(2); 
+            numbers.add(3);
+            numbers.add(4); 
+            numbers.add(5); 
             
             //Display the elements+++++++++++++++++++++++++++++++++++++++++++++++
             System.out.println("++++++++++++++++++");
