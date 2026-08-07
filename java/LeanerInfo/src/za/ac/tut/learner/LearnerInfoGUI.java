@@ -14,6 +14,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -54,5 +55,36 @@ public class LearnerInfoGUI extends JFrame{
         learnerPanel.add(lblLearner);
         learnerPanel.add(this.tfLearner);
         
+        //Building Age row++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        JPanel agePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
+        JLabel lblAge = new JLabel("Age");
+        
+        this.spnAge = new JSpinner(
+                new SpinnerNumberModel(
+                        1,              //initial value
+                        1,      //minimum value
+                        6,      //maximum value
+                        1       //step size
+                )
+        );
+        
+        agePanel.add(lblAge);
+        agePanel.add(this.spnAge);
+        
+        //Building Gender row++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        JPanel genderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
+        JLabel lblGender = new JLabel("Gender");
+        this.rbtnMale = new JRadioButton("Male");
+        this.rbtnFemale = new JRadioButton("Female");
+        
+        this.genderGroup = new ButtonGroup();
+        this.genderGroup.add(this.rbtnMale);
+        this.genderGroup.add(this.rbtnFemale);
+        
+        genderPanel.add(lblGender);
+        genderPanel.add(this.rbtnMale);
+        genderPanel.add(this.rbtnFemale);
     }
 }
