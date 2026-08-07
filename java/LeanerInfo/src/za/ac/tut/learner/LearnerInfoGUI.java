@@ -4,6 +4,7 @@ package za.ac.tut.learner;
 //IMPORT STATEMENTS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -30,7 +31,7 @@ public class LearnerInfoGUI extends JFrame{
     private ButtonGroup genderGroup;
     
     private JCheckBox ckbRespitory;
-    private JCheckBox FoodDrugs;
+    private JCheckBox ckbFoodDrugs;
     private JCheckBox ckbContact;
     
     private JButton btnSave;
@@ -86,5 +87,38 @@ public class LearnerInfoGUI extends JFrame{
         genderPanel.add(lblGender);
         genderPanel.add(this.rbtnMale);
         genderPanel.add(this.rbtnFemale);
+        
+        //Building Allergies row+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        JPanel allergyPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
+        JLabel lblAllergies = new JLabel("Allergies?");
+        this.ckbRespitory = new JCheckBox("Respiratory");
+        this.ckbFoodDrugs = new JCheckBox("Food/Drugs");
+        this.ckbContact = new JCheckBox("Contact");
+        
+        allergyPanel.add(lblAllergies);
+        allergyPanel.add(this.ckbRespitory);
+        allergyPanel.add(this.ckbFoodDrugs);
+        allergyPanel.add(this.ckbContact);
+        
+        //Building the Button row++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        
+        this.btnSave = new JButton("Save Info");
+        this.btnClear = new JButton("Clear Info");
+        
+        buttonPanel.add(this.btnSave);
+        buttonPanel.add(this.btnClear);
+        
+        //Stacking the input rows+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        JPanel inputPanel = new JPanel(new GridLayout(5, 1));
+        
+        inputPanel.add(learnerPanel);
+        inputPanel.add(agePanel);
+        inputPanel.add(genderPanel);
+        inputPanel.add(allergyPanel);
+        inputPanel.add(buttonPanel);
+        
+        
     }
 }
