@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -55,10 +57,10 @@ public class LearnerInfoGUI extends JFrame{
         JPanel learnerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         
         JLabel lblLearner = new JLabel("Learner");
-        this.tfLearner = new JTextField(12);
+        tfLearner = new JTextField(12);
         
         learnerPanel.add(lblLearner);
-        learnerPanel.add(this.tfLearner);
+        learnerPanel.add(tfLearner);
         
         //Building Age row++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         JPanel agePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -152,13 +154,44 @@ public class LearnerInfoGUI extends JFrame{
         this.setVisible(true);
     }
 
-    private static class BtnSaveListener implements ActionListener {
+    //PUBLIC METHODS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    private  class BtnSaveListener implements ActionListener {
 
-        public BtnSaveListener() {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            String learner = tfLearner.getText().trim();
+            
+            if(learner.isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Please enter the learner name,");
+                tfLearner.requestFocus();
+                return;
+            }
+            
+            String gender = "";
+            if(rbtnMale.isSelected()){
+                gender = rbtnMale.getText();
+            } else if(rbtnFemale.isSelected()){
+                gender = rbtnFemale.getText();
+            } else{
+               JOptionPane.showMessageDialog(rootPane, "Please select a gender");
+               return;
+            }
+            
+            int age = (int) spnAge.getValue();
+            
+            String allergies = buildAllergyText();
+            
+            String output = "=== Learner Information ===\n"
+                                            + "Learner: " + learner + "\n"
+                                            + "Age: " + age + "\n"
+                                            + "Gender: " + gender + "\n"
+                                             + "Allergies: " + allergies;
+            
+            taOutput.setText(output);
         }
     }
 
-    private static class BtnClearListener implements ActionListener {
+    private  class BtnClearListener implements ActionListener {
 
         public BtnClearListener() {
         }
