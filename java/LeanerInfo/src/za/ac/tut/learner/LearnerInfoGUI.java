@@ -154,7 +154,7 @@ public class LearnerInfoGUI extends JFrame{
         this.setVisible(true);
     }
 
-    //PUBLIC METHODS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //PRIVATE METHODS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private  class BtnSaveListener implements ActionListener {
 
         @Override
@@ -225,4 +225,9 @@ public class LearnerInfoGUI extends JFrame{
             tfLearner.requestFocus();
         }
     }
+    
+    //PUBLIC METHODS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        public static void main(String[] args){
+            new LearnerInfoGUI();
+        }
 }
