@@ -189,7 +189,25 @@ public class LearnerInfoGUI extends JFrame{
             
             taOutput.setText(output);
         }
-    }
+
+        private String buildAllergyText() {
+            String allergies = "";
+            
+            if(ckbRespitory.isSelected()){
+                allergies += "Respitory, ";
+            }
+            if(ckbFoodDrugs.isSelected()){
+                allergies += "Food/Drugs, ";
+        }
+            if(ckbContact.isSelected()){
+                allergies += "Contact, ";
+            }
+            if(allergies.isEmpty()){
+                return "None";
+            }
+            
+            return allergies.substring(0, allergies.length() - 2);
+        }
 
     private  class BtnClearListener implements ActionListener {
 
