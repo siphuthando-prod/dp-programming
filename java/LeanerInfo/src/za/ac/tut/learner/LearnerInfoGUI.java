@@ -189,6 +189,7 @@ public class LearnerInfoGUI extends JFrame{
             
             taOutput.setText(output);
         }
+    }
 
         private String buildAllergyText() {
             String allergies = "";
@@ -210,9 +211,18 @@ public class LearnerInfoGUI extends JFrame{
         }
 
     private  class BtnClearListener implements ActionListener {
-
-        public BtnClearListener() {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            tfLearner.setText("");
+            spnAge.setValue(1);
+            genderGroup.clearSelection();
+            
+            ckbRespitory.setSelected(false);
+            ckbFoodDrugs.setSelected(false);
+            ckbContact.setSelected(false);
+            
+            taOutput.setText("");
+            tfLearner.requestFocus();
         }
     }
-
 }
