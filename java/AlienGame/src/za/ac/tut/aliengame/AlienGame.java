@@ -4,6 +4,7 @@ package za.ac.tut.aliengame;
 //IMPORT STATEMENTS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.Random;
 import javax.swing.*;
 
 /**
@@ -16,6 +17,8 @@ public class AlienGame extends JFrame{
     private int score;
     private JPanel gamePanel = new JPanel();
     private JButton[] buttons = new JButton[16];
+    private Random random = new Random();
+    private int alien;
     
     //CONSTRUCTOR++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public AlienGame(){
@@ -35,9 +38,19 @@ public class AlienGame extends JFrame{
             this.gamePanel.add(this.buttons[k]);
         }
         
+        moveAlien();
+        
         this.setVisible(true);
     }
-    
+    //PRIVATE METHODS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    private void moveAlien(){
+        for (JButton button : buttons) {
+            button.setText("");
+        }
+        
+        this.alien = random.nextInt(this.buttons.length);
+        this.buttons[this.alien].setText("👽");        
+    }
     //MAIN METHOD++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public static void main(String[]args){
         new AlienGame();
