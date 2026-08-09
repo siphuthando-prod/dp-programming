@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import za.ac.aop.CarManager;
@@ -78,6 +79,28 @@ public class CarGUI extends JFrame{
         buttonPanel.add(this.btnAdd);
         buttonPanel.add(this.btnDisplay);
         buttonPanel.add(this.btnSearch);
+        
+        JPanel northPanel = new JPanel(new BorderLayout(5, 5));
+        northPanel.add(this.pnlData, BorderLayout.CENTER);
+        northPanel.add(buttonPanel, BorderLayout.SOUTH);
+        
+        this.lblResult = new JLabel("Result");
+        
+        this.carOutput = new JTextArea();
+        this.carOutput.setEditable(false);
+        this.carOutput.setLineWrap(true);
+        this.carOutput.setWrapStyleWord(true);
+        
+        JScrollPane scrollPane = new JScrollPane(this.carOutput);
+        
+        JPanel outputPanel = new JPanel(new BorderLayout());
+        outputPanel.add(this.lblResult, BorderLayout.NORTH);
+        outputPanel.add(scrollPane, BorderLayout.CENTER);
+        
+        this.ui.add(northPanel, BorderLayout.NORTH);
+        this.ui.add(outputPanel, BorderLayout.CENTER);
+        
+        this.add(this.ui);
     }
 
     private void registerListeners() {
