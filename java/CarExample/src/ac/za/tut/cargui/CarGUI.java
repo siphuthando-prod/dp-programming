@@ -5,6 +5,7 @@ package ac.za.tut.cargui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -103,7 +104,27 @@ public class CarGUI extends JFrame{
         this.add(this.ui);
     }
 
-    private void registerListeners() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void registerListeners(){
+        this.btnAdd.addActionListener(new BtnAddClickListener());
+        this.btnDisplay.addActionListener(new BtnDisplayClickListener());
+        this.btnSearch.addActionListener(new BtnSearchClickListener());
+    }
+
+    private static class BtnAddClickListener implements ActionListener {
+
+        public BtnAddClickListener() {
+        }
+    }
+
+    private static class BtnDisplayClickListener implements ActionListener {
+
+        public BtnDisplayClickListener() {
+        }
+    }
+
+    private static class BtnSearchClickListener implements ActionListener {
+
+        public BtnSearchClickListener() {
+        }
     }
 }
