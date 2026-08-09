@@ -16,5 +16,11 @@ public class AlienGame extends JFrame{
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        
+    }
+    
+    //MAIN METHOD++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public static void main(String[]args){
+        new AlienGame();
     }
 }
