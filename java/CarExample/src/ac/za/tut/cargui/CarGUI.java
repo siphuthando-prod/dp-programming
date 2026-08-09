@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -135,13 +136,35 @@ public class CarGUI extends JFrame{
         }
     }
 
-    private  class BtnDisplayClickListener implements ActionListener {
-
-        public BtnDisplayClickListener() {
+    private  class BtnSearchClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            String brand = tfBrandName.getText().trim();
+            String yearText = tfYearModel.getText().trim();
+            
+            if(brand.isEmpty() || yearText.isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Enter the brand and model year to search.");
+                return;
+            }
+            
+            try{
+                int year = Integer.parseInt(yearText);                
+                Car found = cm.searchCar(brand, year);
+                
+                if(found == null){
+                    carOutput.setText("No matching car was found");
+                } else{
+                    carOutput.setText("Matching Car\n\n" 
+                                                                    + "Brand: " + found.getBrandName()
+                                                                    + "\nModel Year: " + found.getYearModel());
+                }
+            } catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(rootPane, "Year model must be a whole number.");
+            }
         }
     }
 
-    private  class BtnSearchClickListener implements ActionListener {
+    private  class BtnDisplayClickListener implements ActionListener {
 
         public BtnSearchClickListener() {
         }
