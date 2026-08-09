@@ -199,5 +199,10 @@ public class CarGUI extends JFrame{
             tfYearModel.setText("");
             tfBrandName.requestFocus();
         }
+    
+    //MAIN METHOD++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public static void main(String[]args){
+        new CarGUI();
+    }
 }
 
