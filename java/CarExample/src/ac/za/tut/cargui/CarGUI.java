@@ -115,7 +115,7 @@ public class CarGUI extends JFrame{
     }
     
     //EVENT HANDLERS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    private  class BtnAddClickListener implements ActionListener {
+    private  class BtnDisplayClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
             ArrayList<Car> cars = cm.getCars();
@@ -164,9 +164,40 @@ public class CarGUI extends JFrame{
         }
     }
 
-    private  class BtnDisplayClickListener implements ActionListener {
-
-        public BtnSearchClickListener() {
+    private  class BtnAddClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent a){
+            String brand = tfBrandName.getText().trim();
+            String yearText = tfYearModel.getText().trim();
+            
+            if(brand.isEmpty() || yearText.isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Enter the brand and model year");
+                return;
+            }
+            
+            try{
+                int year = Integer.parseInt(yearText);
+                
+                Car car = new Car();
+                car.setBrandName(brand);
+                car.setYearModel(year);
+                
+                cm.addCar(car);
+                
+                JOptionPane.showMessageDialog(rootPane, "Car added successfully");
+                
+                clearInputs();
+                
+            } catch(NumberFormatException q){
+                JOptionPane.showMessageDialog(rootPane, "Year model must be a whole number.");
+            }
         }
     }
+
+    private void clearInputs() {
+            tfBrandName.setText("");
+            tfYearModel.setText("");
+            tfBrandName.requestFocus();
+        }
 }
+
