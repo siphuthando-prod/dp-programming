@@ -2,6 +2,9 @@
 package ac.za.tut.cargui;
 
 //IMPORT STATEMENTS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -52,7 +55,29 @@ public class CarGUI extends JFrame{
 
     //PRIVATE METHODS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private void buildInterface() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.ui = new JPanel(new BorderLayout(8, 8));        
+        this.pnlData = new JPanel(new GridLayout(2, 2, 8, 8));
+        
+        this.lblName = new JLabel("Brand Name");
+        this.lblModel = new JLabel("Year Model");
+        
+        this.tfBrandName = new JTextField();
+        this.tfYearModel = new JTextField();
+        
+        this.pnlData.add(this.lblName);
+        this.pnlData.add(this.tfBrandName);
+        this.pnlData.add(this.lblModel);
+        this.pnlData.add(this.tfYearModel);
+        
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        
+        this.btnAdd = new JButton("Add Car");
+        this.btnDisplay = new JButton("Display Cars");
+        this.btnSearch = new JButton("Search Car");
+        
+        buttonPanel.add(this.btnAdd);
+        buttonPanel.add(this.btnDisplay);
+        buttonPanel.add(this.btnSearch);
     }
 
     private void registerListeners() {
