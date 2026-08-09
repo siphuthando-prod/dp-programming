@@ -5,7 +5,9 @@ package ac.za.tut.cargui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import za.ac.aop.Car;
 import za.ac.aop.CarManager;
 
 /**
@@ -109,20 +112,36 @@ public class CarGUI extends JFrame{
         this.btnDisplay.addActionListener(new BtnDisplayClickListener());
         this.btnSearch.addActionListener(new BtnSearchClickListener());
     }
-
-    private static class BtnAddClickListener implements ActionListener {
-
-        public BtnAddClickListener() {
+    
+    //EVENT HANDLERS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    private  class BtnAddClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            ArrayList<Car> cars = cm.getCars();
+            
+            if(cars.isEmpty()){
+                carOutput.setText("No cars have been added.");
+                return;
+            }
+            
+            String output = "Dealership: " + cm.getDealershipName() + "\n\n";
+            
+            for (Car car : cars) {
+                output += "Brand: " + car.getBrandName() + "\n";
+                output += "Model Year: " + car.getYearModel() + "\n\n";
+            }
+            
+            carOutput.setText(output);
         }
     }
 
-    private static class BtnDisplayClickListener implements ActionListener {
+    private  class BtnDisplayClickListener implements ActionListener {
 
         public BtnDisplayClickListener() {
         }
     }
 
-    private static class BtnSearchClickListener implements ActionListener {
+    private  class BtnSearchClickListener implements ActionListener {
 
         public BtnSearchClickListener() {
         }
