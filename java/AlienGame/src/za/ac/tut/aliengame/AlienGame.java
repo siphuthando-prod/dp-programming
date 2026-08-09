@@ -35,6 +35,16 @@ public class AlienGame extends JFrame{
         
         for(int k = 0; k < this.buttons.length; k++){
             this.buttons[k] = new JButton();
+            final int index = k;
+            
+            this.buttons[k].addActionListener(e -> {
+                if(index == this.alien){
+                    this.score++;
+                    this.scoreLabel.setText("Score: " + this.score);
+                    moveAlien();
+                }
+            });
+            
             this.gamePanel.add(this.buttons[k]);
         }
         
