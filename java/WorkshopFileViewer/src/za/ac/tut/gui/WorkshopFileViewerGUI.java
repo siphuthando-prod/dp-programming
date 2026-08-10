@@ -172,8 +172,10 @@ public class WorkshopFileViewerGUI extends JFrame{
     }
 
     private  class MenuItemExitListener implements ActionListener {
-
-        public MenuItemExitListener() {
+        //Configuring exit menu item++++++++++++++++++++++++++++++++++++++++++++++++++++
+        @Override
+        public void actionPerformed(ActionEvent e){
+            dispose();
         }
     }
     //MAIN METHOD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
