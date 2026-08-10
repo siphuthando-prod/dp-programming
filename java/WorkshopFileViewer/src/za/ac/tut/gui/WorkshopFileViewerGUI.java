@@ -2,11 +2,18 @@
 package za.ac.tut.gui;
 
 //IMPORT STATEMENTS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -53,7 +60,25 @@ public class WorkshopFileViewerGUI extends JFrame{
     }
 
     private void createInterface() {
+        //Configuring the interface++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.lblStatus = new JLabel("No workshop file loaded");
+        this.lblStatus.setForeground(Color.RED);
         
+        JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        statusPanel.setBorder(BorderFactory.createTitledBorder("File Status"));
+        statusPanel.add(this.lblStatus);
+        
+        this.taWorkshops = new JTextArea(18, 60);
+        this.taWorkshops.setEditable(false);
+        this.taWorkshops.setTabSize(18);
+        this.taWorkshops.setFont(new Font("Monospaced", Font.PLAIN, 13));
+        
+        JScrollPane scrollPane = new JScrollPane(this.taWorkshops);
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Workshop Records"));
+        
+        this.setLayout(new BorderLayout(8, 8));
+        this.add(statusPanel, BorderLayout.NORTH);
+        this.add(scrollPane, BorderLayout.CENTER);
     }
 
     /*private void registerListeners() {
