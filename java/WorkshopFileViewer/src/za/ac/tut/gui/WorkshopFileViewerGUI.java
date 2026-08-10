@@ -128,7 +128,7 @@ public class WorkshopFileViewerGUI extends JFrame{
                         continue;
                     }
                     
-                    String[] fields = line.split("[, \\s]+");
+                    String[] fields = line.split(",");
                     if(fields.length != 4){
                         skippedRows++;
                         continue;
@@ -142,8 +142,11 @@ public class WorkshopFileViewerGUI extends JFrame{
                     try{
                         int capacity = Integer.parseInt(capacityText);
                         
-                        output.append(code).append("\t").append(title).append("\t").append(venue).append("\t")
+                        output.append(code).append("\t")
+                                .append(title).append("\t")
+                                .append(venue).append("\t")
                                 .append(capacity).append("\t").append("\n");
+                        rowsRead++;
                     } catch(NumberFormatException ex){
                         skippedRows++;
                     }
