@@ -28,7 +28,7 @@ public class WorkshopFileViewerGUI extends JFrame{
         
         createMenu();
         createInterface();
-        registerListeners();
+        //registerListeners();
         
         this.pack();
         this.setLocationRelativeTo(null);
@@ -47,13 +47,21 @@ public class WorkshopFileViewerGUI extends JFrame{
         fileMenu.add(this.miOpen);
         fileMenu.addSeparator();
         fileMenu.add(this.miExit);
+        
+        menuBar.add(fileMenu);
+        this.setJMenuBar(menuBar);
     }
 
     private void createInterface() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
-    private void registerListeners() {
+    /*private void registerListeners() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }*/
+    
+    //MAIN METHOD+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public static void main(String[]args){
+        new WorkshopFileViewerGUI();
     }
 }
