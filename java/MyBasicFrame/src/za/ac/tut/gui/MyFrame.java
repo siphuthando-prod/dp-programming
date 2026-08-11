@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 /**
  *
@@ -22,10 +23,19 @@ public class MyFrame extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
         //Configuring menu bar++++++++++++++++++++++++++++
         JMenuBar menuBar = new JMenuBar();
-        
+        //Menus+++++++++++++++++++++++++++++++++++++
         JMenu fileMenu = new JMenu("Fle");
         JMenu editMenu = new JMenu("Edit");
         JMenu helpMenu = new JMenu("Help");
+        
+        //Menu items++++++++++++++++++++++++++++++
+        JMenuItem loadItem = new JMenuItem("Load");
+        JMenuItem saveItem = new JMenuItem("Save");
+        JMenuItem exitItem = new JMenuItem("Exit");
+        
+         fileMenu.add(loadItem);
+        fileMenu.add(saveItem);
+        fileMenu.add(exitItem);
         
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
