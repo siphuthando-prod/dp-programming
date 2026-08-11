@@ -4,6 +4,7 @@ package za.ac.tut.gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -45,6 +46,14 @@ public class MyFrame extends JFrame implements ActionListener {
         loadItem.addActionListener(this);
         saveItem.addActionListener(this);
         exitItem.addActionListener(this);
+        
+        //Configuring shortcuts++++++++++++++++++++++++++++++++++++++++++++++++++++
+        this.fileMenu.setMnemonic(KeyEvent.VK_F);  //Alt + f for Load
+        this.editMenu.setMnemonic(KeyEvent.VK_E);  //Alt + e for save
+        this.helpMenu.setMnemonic(KeyEvent.VK_H);  //Alt + h for exit
+        this.loadItem.setMnemonic(KeyEvent.VK_L);  //l for exit
+        this.saveItem.setMnemonic(KeyEvent.VK_S);  //s for exit
+        this.exitItem.setMnemonic(KeyEvent.VK_E);  //e for exit
         
         fileMenu.add(loadItem);
         fileMenu.add(saveItem);
