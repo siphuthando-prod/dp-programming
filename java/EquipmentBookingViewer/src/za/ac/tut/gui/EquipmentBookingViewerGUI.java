@@ -3,6 +3,8 @@ package za.ac.tut.gui;
 //IMPORT STATEMENTS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
 
@@ -34,7 +36,18 @@ public class EquipmentBookingViewerGUI extends JFrame {
     
     //PRIVATE METHODS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private void createMenu() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //Configuring menu bar++++++++++++++++++++++++++++++++++++++++++++++
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        
+        this.miOpen = new JMenuItem("Open");
+        this.miExit = new JMenuItem("Exit");
+        
+        fileMenu.add(this.miOpen);
+        fileMenu.addSeparator();
+        fileMenu.add(this.miExit);
+        menuBar.add(fileMenu);
+        this.setJMenuBar(menuBar);
     }
 
     private void createMenuInterface() {
@@ -43,5 +56,10 @@ public class EquipmentBookingViewerGUI extends JFrame {
 
     private void registerLIsteners() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    //PUBLIC METHODS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public static void main(String[]args){
+        new EquipmentBookingViewerGUI();
     }
 }
