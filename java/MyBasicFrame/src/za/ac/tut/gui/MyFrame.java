@@ -14,6 +14,15 @@ import javax.swing.JMenuItem;
  * @author S. X Mabuza
  */
 public class MyFrame extends JFrame implements ActionListener {
+    //PRIVATE MEMBERS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    private JMenuBar menuBar;
+    private JMenu fileMenu;
+    private JMenu editMenu;
+    private JMenu helpMenu;
+    private JMenuItem loadItem ;
+    private JMenuItem saveItem;
+    private JMenuItem exitItem;
+    
     //CONSTRUCTOR+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public MyFrame(){
         super("Basic Menu bar");
@@ -22,18 +31,22 @@ public class MyFrame extends JFrame implements ActionListener {
         this.setLayout(new FlowLayout());
         this.setLocationRelativeTo(null);
         //Configuring menu bar++++++++++++++++++++++++++++
-        JMenuBar menuBar = new JMenuBar();
+        menuBar = new JMenuBar();
         //Menus+++++++++++++++++++++++++++++++++++++
-        JMenu fileMenu = new JMenu("Fle");
-        JMenu editMenu = new JMenu("Edit");
-        JMenu helpMenu = new JMenu("Help");
+         fileMenu = new JMenu("Fle");
+        editMenu = new JMenu("Edit");
+        helpMenu = new JMenu("Help");
         
         //Menu items++++++++++++++++++++++++++++++
-        JMenuItem loadItem = new JMenuItem("Load");
-        JMenuItem saveItem = new JMenuItem("Save");
-        JMenuItem exitItem = new JMenuItem("Exit");
+        loadItem = new JMenuItem("Load");
+         saveItem = new JMenuItem("Save");
+         exitItem = new JMenuItem("Exit");
         
-         fileMenu.add(loadItem);
+        loadItem.addActionListener(this);
+        saveItem.addActionListener(this);
+        exitItem.addActionListener(this);
+        
+        fileMenu.add(loadItem);
         fileMenu.add(saveItem);
         fileMenu.add(exitItem);
         
@@ -48,7 +61,15 @@ public class MyFrame extends JFrame implements ActionListener {
     //PUBLIC mETHODS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Override
     public void actionPerformed(ActionEvent e){
-        
+        if(e.getSource() == loadItem){
+        System.out.println("You loaded a file");
+        }
+        if(e.getSource() == saveItem){
+            System.out.println("You saved a file");
+        }
+        if(e.getSource() == exitItem){
+            System.exit(0);
+        }
     }
     
     public static void main(String[]args){
