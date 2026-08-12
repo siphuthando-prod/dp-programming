@@ -124,7 +124,7 @@ public class Mini3GUI extends JFrame{
         
         btnFormatCountryCode = new JButton("Format Numbers (+27)");
         btnFormatCountryCode.setBackground(Color.decode("#cccbaf"));
-        //btnFormatCountryCode.addActionListener(new BtnFormatNumbersClickListener());
+        btnFormatCountryCode.addActionListener(new BtnFormatNumbersClickListener());
         
         bottomPnl.add(btnCalculateDurations); bottomPnl.add(cmbProviders);
         bottomPnl.add(ckbFilter); bottomPnl.add(btnFormatCountryCode);
@@ -287,17 +287,35 @@ public class Mini3GUI extends JFrame{
      }
             
                 
-    /*private class BtnFormatNumbersClickListener implements ActionListener{
+    private class BtnFormatNumbersClickListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //Write code here
+            //Configuring number format button++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            StringBuilder builder = new StringBuilder();
+            builder.append("Date\t\tStart Time\tEnd Time\tExtension\tPhone Number\tService Provider\n");
+            builder.append("Updated list\n");
             
+            for (DetailRecord record : cdp.getRecords()) {
+                if(record.getPhoneNumber() != null){
+                    if(record.getPhoneNumber().startsWith("0")){
+                        String replacement = record.getPhoneNumber().replaceFirst("0", "+27");
+                        record.setPhoneNumber(replacement);
+                    }
+                }
+                 builder.append(record.getDate()).append("\t")
+                                     .append(record.getStartTime()).append("\t")
+                                     .append(record.getEndTime()).append("\t")
+                                     .append(record.getExtension()).append("\t\t")
+                                     .append(record.getPhoneNumber()).append("\t")
+                                      .append(record.getProvider()).append("\n");
+            }
+            taContent.setText(builder.toString());
         }
         
     }
     
-    private class MenuItemSaveClickListener implements ActionListener{
+    /*private class MenuItemSaveClickListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
