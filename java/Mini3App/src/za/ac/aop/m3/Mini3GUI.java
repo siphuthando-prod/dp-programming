@@ -69,7 +69,7 @@ public class Mini3GUI extends JFrame{
         JMenuItem saveItem = new JMenuItem("Save File");
         saveItem.addActionListener(new MenuItemSaveClickListener());
         JMenuItem exitItem = new JMenuItem("Exit");
-        //exitItem.addActionListener(new MenuItemExitClickListener());
+        exitItem.addActionListener(new MenuItemExitClickListener());
 
         fileMenu.add(openItem);
         fileMenu.add(saveItem);
@@ -353,14 +353,19 @@ public class Mini3GUI extends JFrame{
         
     }
     
-    /*private class MenuItemExitClickListener implements ActionListener{
+    private class MenuItemExitClickListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //Write code here
+            //Configuring exit menu item++++++++++++++++++++++++++++++++++++++++++++++++++++
+            int user = JOptionPane.showConfirmDialog(Mini3GUI.this, "Are you sure you want to exit?",
+                                                                                                        "Exit", JOptionPane.YES_NO_OPTION);
+            if(user == JOptionPane.YES_OPTION){
+                dispose();
+            }
             
         }
-    }*/
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Mini3GUI::new);
