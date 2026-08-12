@@ -11,6 +11,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -28,6 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import za.ac.aop.model.DetailRecord;
 import za.ac.aop.processor.CallDetailProcessor; //ADD jar to resolve errors
 
 /**
@@ -148,10 +153,46 @@ public class Mini3GUI extends JFrame{
             }
             
             File selectedFile = chooser.getSelectedFile();
+                       
+            int rowsRead = 0;
+            int skippedRows = 0;
             
             try {
                 BufferedReader bfReader = new BufferedReader(new FileReader(selectedFile));
-            } catch (FileNotFoundException ex) {
+                String line;
+                
+                while((line = bfReader.readLine())!= null){
+                    if(line.trim().isEmpty()){
+                        continue;
+                    }
+                    
+                    String[] fields = line.split(",");
+                    if(fields.length != 6){
+                        skippedRows++;
+                        continue;
+                    }
+                    
+                    //Conversion++++++++++++++++++++++++++++++++++++++++++++++
+                    LocalDate date = LocalDate.parse(fields[0]);
+                    LocalTime startTime = LocalTime.parse(fields[1]);
+                    LocalTime endTime = LocalTime.parse(fields[2]);
+                    Long extension = Long.valueOf(fields[3]);
+                    String phoneNumber = fields[4];
+                    String provider = fields[5];
+                    
+                    DetailRecord record = new DetailRecord();
+                    record.setDate(date);
+                    record.setStartTime(startTime);
+                    record.setStartTime(endTime);
+                    record.setExtension(extension);
+                    record.setPhoneNumber(phoneNumber);
+                    record.setProvider(provider);
+                    
+                    cdp.addDR(record);
+                    
+                }
+                
+            } catch (IOException ex) {
                 ex.getMessage();
             }
         }
