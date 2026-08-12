@@ -7,10 +7,17 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -28,6 +35,7 @@ import za.ac.aop.processor.CallDetailProcessor; //ADD jar to resolve errors
  * @author LANGARM
  */
 public class Mini3GUI extends JFrame{
+    //PRIVATE MEMBERS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private JPanel tab1;
     
     // TAB 1 Thingz
@@ -39,13 +47,15 @@ public class Mini3GUI extends JFrame{
     private JButton btnFormatCountryCode;
     
     private CallDetailProcessor cdp; //add jar to resolve
-
+    
+    //CONSTRUCTOR+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public Mini3GUI() {
+        //Configuring Frame+++++++++++++++++++++++++++++++++++++++++++++++++++
         setTitle("Mini Assignment 3 - AOP/AOR216D");
         setSize(550, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        
+        //Configuring menu bar++++++++++++++++++++++++++++++++++++++++++++++
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
 
@@ -77,6 +87,7 @@ public class Mini3GUI extends JFrame{
     
     //TAB 1 => Complete the following Event Listeners
     private void Question1Tab() {
+        //Configuring Tab 1++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         tab1 = new JPanel(new BorderLayout());
         taContent = new JTextArea(10, 30);
         taContent.setFont(new Font("Arial", Font.BOLD, 12));
@@ -122,12 +133,27 @@ public class Mini3GUI extends JFrame{
         cdp = new CallDetailProcessor();
     }
     
+    //Event handlers+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private class MenuItemOpenClickListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //Write code here
+            //Configuring open menu item+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            JFileChooser chooser = new JFileChooser();
             
+            int approve = chooser.showOpenDialog(Mini3GUI.this);
+            
+            if(approve != JFileChooser.APPROVE_OPTION){
+             return;   
+            }
+            
+            File selectedFile = chooser.getSelectedFile();
+            
+            try {
+                BufferedReader bfReader = new BufferedReader(new FileReader(selectedFile));
+            } catch (FileNotFoundException ex) {
+                ex.getMessage();
+            }
         }
     }
     
