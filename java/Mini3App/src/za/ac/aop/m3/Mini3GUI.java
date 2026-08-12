@@ -8,8 +8,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -65,7 +67,7 @@ public class Mini3GUI extends JFrame{
         JMenuItem openItem = new JMenuItem("Open File");
         openItem.addActionListener(new MenuItemOpenClickListener());
         JMenuItem saveItem = new JMenuItem("Save File");
-        //saveItem.addActionListener(new MenuItemSaveClickListener());
+        saveItem.addActionListener(new MenuItemSaveClickListener());
         JMenuItem exitItem = new JMenuItem("Exit");
         //exitItem.addActionListener(new MenuItemExitClickListener());
 
@@ -253,7 +255,7 @@ public class Mini3GUI extends JFrame{
             int inputRead = cmbProviders.getSelectedIndex();
             
             StringBuilder builder = new StringBuilder();
-            builder.append("Date\t\tStart Time\tEnd Time\tExtension\tPhone Number\tService Provider\n");
+            builder.append("Date\t\tStart Time\tEnd Time\tExtension\tPhone Number\t\tService Provider\n");
             
             boolean found = false;
             for (DetailRecord record : cdp.getRecords()) {
@@ -273,7 +275,7 @@ public class Mini3GUI extends JFrame{
                                      .append(record.getStartTime()).append("\t")
                                      .append(record.getEndTime()).append("\t")
                                      .append(record.getExtension()).append("\t\t")
-                                     .append(record.getPhoneNumber()).append("\t")
+                                     .append(record.getPhoneNumber()).append("\t\t")
                                       .append(record.getProvider()).append("\n");
                 }
             }
@@ -315,17 +317,43 @@ public class Mini3GUI extends JFrame{
         
     }
     
-    /*private class MenuItemSaveClickListener implements ActionListener{
+    private class MenuItemSaveClickListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //Write code here
+            //Configuring save menu Item+++++++++++++++++++++++++++++++++++++++++++++++++++
+            JFileChooser save = new JFileChooser();
+            int result = save.showSaveDialog(Mini3GUI.this);
             
+            if(result == JFileChooser.APPROVE_OPTION){
+                File selectedFile = save.getSelectedFile();
+                try {
+                    FileWriter fileWriter = new FileWriter(selectedFile);
+                    for (DetailRecord record : cdp.getRecords()) {
+                        fileWriter.write(record.getDate() + "\t");
+                        fileWriter.write(record.getStartTime() + "\t");
+                        fileWriter.write(record.getEndTime() + "\t");
+                        fileWriter.write(record.getExtension() + "\t");
+                        fileWriter.write(record.getPhoneNumber() + "\t");
+                        fileWriter.write(record.getProvider() + "\n");;
+                    }
+                    JOptionPane.showMessageDialog( Mini3GUI.this, "File saved successfully.",
+                                                                                                "Save Successful",
+                                                                                                        JOptionPane.INFORMATION_MESSAGE
+        );
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(Mini3GUI.this, "File could not be written",
+                                                                                                "File Write Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else{
+                JOptionPane.showMessageDialog(Mini3GUI.this, "Save cancelled", "Save", 
+                                                                                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
         
     }
     
-    private class MenuItemExitClickListener implements ActionListener{
+    /*private class MenuItemExitClickListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
