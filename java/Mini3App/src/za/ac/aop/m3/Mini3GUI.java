@@ -9,15 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -190,7 +186,7 @@ public class Mini3GUI extends JFrame{
                         DetailRecord record = new DetailRecord();
                         record.setDate(date);
                         record.setStartTime(startTime);
-                        record.setStartTime(endTime);
+                        record.setEndTime(endTime);
                         record.setExtension(extension);
                         record.setPhoneNumber(phoneNumber);
                         record.setProvider(provider);
@@ -233,13 +229,19 @@ public class Mini3GUI extends JFrame{
             //Configuring calculate duration button+++++++++++++++++++++++++++++++++++++++++++++
             int sum = 0;
             for(DetailRecord record: cdp.getRecords()){
-                if(record == null){
-                    JOptionPane.showMessageDialog(Mini3GUI.this, "No record found");
+                    //System.out.println("Start time: " + record.getStartTime());
+                    //System.out.println("End time: " + record.getEndTime());
+                if(record.getStartTime() == null || record.getEndTime() == null){
+                    JOptionPane.showMessageDialog(Mini3GUI.this, "No record found", 
+                                                                                            "No Records found",
+                                                                                            JOptionPane.ERROR_MESSAGE);
                 }
-                sum += record.getEndTime().toSecondOfDay() - record.getStartTime().toSecondOfDay();
-            }
             
-            JOptionPane.showMessageDialog(Mini3GUI.this, "The sum of all call logs: " + sum);
+                 sum += record.getEndTime().toSecondOfDay() - record.getStartTime().toSecondOfDay();
+            }
+            JOptionPane.showMessageDialog(Mini3GUI.this, "The sum of all call logs: " + sum, 
+                                                                                    "Total Call Duration",
+                                                                                    JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
