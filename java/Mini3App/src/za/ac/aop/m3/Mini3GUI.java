@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -67,9 +69,9 @@ public class Mini3GUI extends JFrame{
         JMenuItem openItem = new JMenuItem("Open File");
         openItem.addActionListener(new MenuItemOpenClickListener());
         JMenuItem saveItem = new JMenuItem("Save File");
-        saveItem.addActionListener(new MenuItemSaveClickListener());
+        //saveItem.addActionListener(new MenuItemSaveClickListener());
         JMenuItem exitItem = new JMenuItem("Exit");
-        exitItem.addActionListener(new MenuItemExitClickListener());
+        //exitItem.addActionListener(new MenuItemExitClickListener());
 
         fileMenu.add(openItem);
         fileMenu.add(saveItem);
@@ -113,7 +115,7 @@ public class Mini3GUI extends JFrame{
         
         btnCalculateDurations = new JButton("Calculate sum of durations");
         btnCalculateDurations.setBackground(Color.decode("#ccafca"));
-        btnCalculateDurations.addActionListener(new BtnCalculateDurationsClickListener());
+        //btnCalculateDurations.addActionListener(new BtnCalculateDurationsClickListener());
         
         String[] providers = new String[]{"Choose Provider", "Vodacom", "MTN", "CellC", "Telkom", "FNB", "ECN"};
         cmbProviders = new JComboBox(providers);
@@ -122,11 +124,11 @@ public class Mini3GUI extends JFrame{
         
         ckbFilter = new JCheckBox("Apply Filter");
         ckbFilter.setBackground(Color.decode("#c0ccaf"));
-        ckbFilter.addActionListener(new CkbFilterChangeListener());
+        //ckbFilter.addActionListener(new CkbFilterChangeListener());
         
         btnFormatCountryCode = new JButton("Format Numbers (+27)");
         btnFormatCountryCode.setBackground(Color.decode("#cccbaf"));
-        btnFormatCountryCode.addActionListener(new BtnFormatNumbersClickListener());
+        //btnFormatCountryCode.addActionListener(new BtnFormatNumbersClickListener());
         
         bottomPnl.add(btnCalculateDurations); bottomPnl.add(cmbProviders);
         bottomPnl.add(ckbFilter); bottomPnl.add(btnFormatCountryCode);
@@ -145,7 +147,9 @@ public class Mini3GUI extends JFrame{
         public void actionPerformed(ActionEvent e) {
             //Configuring open menu item+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             JFileChooser chooser = new JFileChooser();
-            
+            StringBuilder builder = new StringBuilder();
+            builder.append("Date\t\tStart Time\tEnd Time\tExtension\tPhone Number\tService Provider\n");
+                        
             int approve = chooser.showOpenDialog(Mini3GUI.this);
             
             if(approve != JFileChooser.APPROVE_OPTION){
@@ -173,32 +177,56 @@ public class Mini3GUI extends JFrame{
                     }
                     
                     //Conversion++++++++++++++++++++++++++++++++++++++++++++++
-                    LocalDate date = LocalDate.parse(fields[0]);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    
+                    LocalDate date = LocalDate.parse(fields[0], formatter);
                     LocalTime startTime = LocalTime.parse(fields[1]);
                     LocalTime endTime = LocalTime.parse(fields[2]);
-                    Long extension = Long.valueOf(fields[3]);
                     String phoneNumber = fields[4];
                     String provider = fields[5];
                     
-                    DetailRecord record = new DetailRecord();
-                    record.setDate(date);
-                    record.setStartTime(startTime);
-                    record.setStartTime(endTime);
-                    record.setExtension(extension);
-                    record.setPhoneNumber(phoneNumber);
-                    record.setProvider(provider);
+                    try{
+                        Long extension = Long.valueOf(fields[3]);
+                        DetailRecord record = new DetailRecord();
+                        record.setDate(date);
+                        record.setStartTime(startTime);
+                        record.setStartTime(endTime);
+                        record.setExtension(extension);
+                        record.setPhoneNumber(phoneNumber);
+                        record.setProvider(provider);
+
+                        cdp.addDR(record);
+                        builder.append(date).append("\t")
+                            .append(startTime).append("\t")
+                            .append(endTime).append("\t")
+                            .append(extension).append("\t\t")
+                            .append(phoneNumber).append("\t")
+                            .append(provider).append("\n");
                     
-                    cdp.addDR(record);
-                    
+                    rowsRead++;
+                    } catch(NumberFormatException eq){
+                        skippedRows++;
+                    }
+
+                }   
+                
+                taContent.setText(builder.toString());
+                   
+                lblFileStatus.setForeground(Color.BLUE);
+                lblFileStatus.setText("File read successfully (" + rowsRead + " rows)");
+                
+                if(skippedRows > 0){
+                    JOptionPane.showMessageDialog(Mini3GUI.this, skippedRows + " malformed reord(s) were skipped");
                 }
                 
             } catch (IOException ex) {
                 ex.getMessage();
             }
+            
         }
     }
     
-    private class BtnCalculateDurationsClickListener implements ActionListener{
+    /*private class BtnCalculateDurationsClickListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -244,7 +272,7 @@ public class Mini3GUI extends JFrame{
             //Write code here
             
         }
-    }
+    }*/
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Mini3GUI::new);
