@@ -115,7 +115,7 @@ public class Mini3GUI extends JFrame{
         
         btnCalculateDurations = new JButton("Calculate sum of durations");
         btnCalculateDurations.setBackground(Color.decode("#ccafca"));
-        //btnCalculateDurations.addActionListener(new BtnCalculateDurationsClickListener());
+        btnCalculateDurations.addActionListener(new BtnCalculateDurationsClickListener());
         
         String[] providers = new String[]{"Choose Provider", "Vodacom", "MTN", "CellC", "Telkom", "FNB", "ECN"};
         cmbProviders = new JComboBox(providers);
@@ -213,7 +213,7 @@ public class Mini3GUI extends JFrame{
                 taContent.setText(builder.toString());
                    
                 lblFileStatus.setForeground(Color.BLUE);
-                lblFileStatus.setText("File read successfully (" + rowsRead + " rows)");
+                lblFileStatus.setText(selectedFile + " loaded successfully: " + rowsRead + " rows read");
                 
                 if(skippedRows > 0){
                     JOptionPane.showMessageDialog(Mini3GUI.this, skippedRows + " malformed reord(s) were skipped");
@@ -226,16 +226,24 @@ public class Mini3GUI extends JFrame{
         }
     }
     
-    /*private class BtnCalculateDurationsClickListener implements ActionListener{
+    private class BtnCalculateDurationsClickListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //Write code here
+            //Configuring calculate duration button+++++++++++++++++++++++++++++++++++++++++++++
+            int sum = 0;
+            for(DetailRecord record: cdp.getRecords()){
+                if(record == null){
+                    JOptionPane.showMessageDialog(Mini3GUI.this, "No record found");
+                }
+                sum += record.getEndTime().toSecondOfDay() - record.getStartTime().toSecondOfDay();
+            }
             
+            JOptionPane.showMessageDialog(Mini3GUI.this, "The sum of all call logs: " + sum);
         }
     }
     
-    private class CkbFilterChangeListener implements ActionListener{
+    /*private class CkbFilterChangeListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -245,7 +253,7 @@ public class Mini3GUI extends JFrame{
         
     }
     
-    private class BtnFormatNumbersClickListener implements ActionListener{
+    /*private class BtnFormatNumbersClickListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
