@@ -120,7 +120,7 @@ public class Mini3GUI extends JFrame{
         
         ckbFilter = new JCheckBox("Apply Filter");
         ckbFilter.setBackground(Color.decode("#c0ccaf"));
-        //ckbFilter.addActionListener(new CkbFilterChangeListener());
+        ckbFilter.addActionListener(new CkbFilterChangeListener());
         
         btnFormatCountryCode = new JButton("Format Numbers (+27)");
         btnFormatCountryCode.setBackground(Color.decode("#cccbaf"));
@@ -245,12 +245,40 @@ public class Mini3GUI extends JFrame{
         }
     }
     
-    /*private class CkbFilterChangeListener implements ActionListener{
+    private class CkbFilterChangeListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //Write code here
-
+            //Configuring Service provider combo box+++++++++++++++++++++++++++++++++++++++++++++++++++
+            int inputRead = cmbProviders.getSelectedIndex();
+            
+            StringBuilder builder = new StringBuilder();
+            builder.append("Date\t\tStart Time\tEnd Time\tExtension\tPhone Number\tService Provider\n");
+            
+            for (DetailRecord record : cdp.getRecords()) {
+                if(ckbFilter.isSelected()){
+                    if(record.getProvider() != null && record.getProvider().equalsIgnoreCase((String)cmbProviders.getItemAt(inputRead))){
+                        builder.append(record.getDate()).append("\t") 
+                                       .append(record.getStartTime()).append("\t")
+                                    .append(record.getEndTime()).append("\t")
+                            .append(record.getExtension()).append("\t\t")
+                            .append(record.getPhoneNumber()).append("\t")
+                            .append(record.getProvider()).append("\n");
+                    } else{
+                        taContent.setText("No matching records found");
+                    }
+                }
+                
+                if(!ckbFilter.isSelected()){
+                    builder.append(record.getDate()).append("\t") 
+                                       .append(record.getStartTime()).append("\t")
+                                    .append(record.getEndTime()).append("\t")
+                            .append(record.getExtension()).append("\t\t")
+                            .append(record.getPhoneNumber()).append("\t")
+                            .append(record.getProvider()).append("\n");
+                }
+            }
+            
         }
         
     }
