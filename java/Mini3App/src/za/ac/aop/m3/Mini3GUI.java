@@ -255,6 +255,7 @@ public class Mini3GUI extends JFrame{
             StringBuilder builder = new StringBuilder();
             builder.append("Date\t\tStart Time\tEnd Time\tExtension\tPhone Number\tService Provider\n");
             
+            boolean found = false;
             for (DetailRecord record : cdp.getRecords()) {
                 if(ckbFilter.isSelected()){
                     if(record.getProvider() != null && record.getProvider().equalsIgnoreCase((String)cmbProviders.getItemAt(inputRead))){
@@ -264,25 +265,28 @@ public class Mini3GUI extends JFrame{
                             .append(record.getExtension()).append("\t\t")
                             .append(record.getPhoneNumber()).append("\t")
                             .append(record.getProvider()).append("\n");
-                    } else{
-                        taContent.setText("No matching records found");
-                    }
-                }
-                
-                if(!ckbFilter.isSelected()){
-                    builder.append(record.getDate()).append("\t") 
-                                       .append(record.getStartTime()).append("\t")
-                                    .append(record.getEndTime()).append("\t")
-                            .append(record.getExtension()).append("\t\t")
-                            .append(record.getPhoneNumber()).append("\t")
-                            .append(record.getProvider()).append("\n");
+                        //taContent.setText(builder.toString());
+                        found = true;
+                    } 
+            }else {
+                        builder.append(record.getDate()).append("\t")
+                                     .append(record.getStartTime()).append("\t")
+                                     .append(record.getEndTime()).append("\t")
+                                     .append(record.getExtension()).append("\t\t")
+                                     .append(record.getPhoneNumber()).append("\t")
+                                      .append(record.getProvider()).append("\n");
                 }
             }
-            
+                  
+                if(ckbFilter.isSelected() && !found){
+                        taContent.setText("No matching records found");
+                } else{
+                    taContent.setText(builder.toString());
+                }
         }
-        
-    }
-    
+     }
+            
+                
     /*private class BtnFormatNumbersClickListener implements ActionListener{
 
         @Override
