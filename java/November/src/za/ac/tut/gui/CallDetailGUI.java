@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import za.ac.aop.processor.CallDetailProcessor;
@@ -61,6 +62,27 @@ public class CallDetailGUI extends JFrame{
         this.taRecords.setTabSize(12);
         this.setFont(new Font("Monospaced", Font.PLAIN, 12));
         JScrollPane scroll = new JScrollPane(this.taRecords);
+        
+        //Configuring appearence of button+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        String[] providers = {"All Providers", "Vodacom", "Telkom", "MTN", "CellC", "ECN", "FNB"};
+        
+        this.cmbProvider = new JComboBox<>(providers);
+        this.ckbApplyFilter = new JCheckBox("Apply Filter");
+        this.btnShowDurations = new JButton("Show Durations");
+        this.btnTotalDuration = new JButton("Total Durations");
+        this.btnMostCalls = new JButton("Most Call by Extension");
+        this.btnLongestCall = new JButton("Longest Call");
+        
+        //Configuring filter panel+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        JPanel filterPan = new JPanel();
+        filterPan.add(this.cmbProvider);
+        filterPan.add(this.ckbApplyFilter);
+        
+        JPanel buttonPn1 = new JPanel();
+        buttonPn1.add(this.btnShowDurations);
+        buttonPn1.add(this.btnTotalDuration);
+        buttonPn1.add(this.btnMostCalls);
+        buttonPn1.add(this.btnLongestCall);
         
         this.setVisible(true);
     }
