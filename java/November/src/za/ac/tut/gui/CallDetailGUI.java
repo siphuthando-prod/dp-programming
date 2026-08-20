@@ -2,6 +2,7 @@
 package za.ac.tut.gui;
 
 //Import statements+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -74,15 +75,36 @@ public class CallDetailGUI extends JFrame{
         this.btnLongestCall = new JButton("Longest Call");
         
         //Configuring filter panel+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        JPanel filterPan = new JPanel();
-        filterPan.add(this.cmbProvider);
-        filterPan.add(this.ckbApplyFilter);
+        JPanel filterPn1 = new JPanel();
+        filterPn1.add(this.cmbProvider);
+        filterPn1.add(this.ckbApplyFilter);
         
+        //Configuring button panel+++++++++++++++++++++++++
         JPanel buttonPn1 = new JPanel();
         buttonPn1.add(this.btnShowDurations);
         buttonPn1.add(this.btnTotalDuration);
         buttonPn1.add(this.btnMostCalls);
         buttonPn1.add(this.btnLongestCall);
+        
+        //Configuring south panel+++++++++++++++++++++++++
+        JPanel southPan1 = new JPanel(new BorderLayout());
+        southPan1.add(filterPn1, BorderLayout.NORTH);
+        southPan1.add(buttonPn1, BorderLayout.SOUTH);
+        
+        //Configuring main panel+++++++++++++++++++++++++++++++++
+        this.add(this.lblStatus, BorderLayout.NORTH);
+        this.add(scroll, BorderLayout.CENTER);
+        this.add(southPan1, BorderLayout.SOUTH);
+        this.setJMenuBar(mb);
+        
+        miOpen.addActionListener(new MenuItemOpenClickListener());
+        miExit.addActionListener(new MenuItemExitClickListener());
+        this.btnShowDurations.addActionListener(new BtnShowDurationsClickListener());
+        this.btnTotalDuration.addActionListener(new BtnTotalDurationClickListener());
+        this.btnMostCalls.addActionListener(new BtnMostCallsClickListener());
+        this.btnLongestCall.addActionListener(new BtnLongestCallClickListener());
+        this.cmbProvider.addActionListener(new ProviderFilterClickListener());
+        this.ckbApplyFilter.addActionListener(new ProviderFilterClickListener());
         
         this.setVisible(true);
     }
