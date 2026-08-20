@@ -2,6 +2,8 @@
 package za.ac.tut.gui;
 
 //Import statements+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -10,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import za.ac.aop.processor.CallDetailProcessor;
 
@@ -47,6 +50,17 @@ public class CallDetailGUI extends JFrame{
         menuFile.add(miOpen);
         menuFile.add(miExit);
         mb.add(menuFile);
+        
+        //Configuring status label+++++++++++++++++++++++++++++++++++++++++++++
+        this.lblStatus = new JLabel("No call-detail file loaded");
+        this.lblStatus.setForeground(Color.red);
+        
+        //Configuring text area+++++++++++++++++++++++++++++++++++++
+        this.taRecords = new JTextArea(22, 85);
+        this.taRecords.setEditable(false);
+        this.taRecords.setTabSize(12);
+        this.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        JScrollPane scroll = new JScrollPane(this.taRecords);
         
         this.setVisible(true);
     }
