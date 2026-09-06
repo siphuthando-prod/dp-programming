@@ -302,7 +302,27 @@ public class QueueProcessor extends JFrame{
     private class BtnFindClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            String target = tfWord.getText()
+                    .toLowerCase()
+                    .replaceAll("[^a-z]", "")
+                    .trim();
             
+            int position = 1;
+            int foundPosition = -1;
+            
+            for (String word : wordQueue) {
+                if(word.equals(target)){
+                    foundPosition = position;
+                    break;
+                }
+                position++;
+            }
+            
+            if(foundPosition == -1){
+                lblStatus.setText(target + " was Not found.");
+            } else{
+                lblStatus.setText(target + " is position " + foundPosition + " from the front.");
+            }
         }
     }
 
