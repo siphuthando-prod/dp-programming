@@ -262,15 +262,28 @@ public class MapProcessor extends JFrame{
             }
         }
     }
-
-    private class BtnLongestClickListener implements ActionListener {
+    
+    private class BtnFindClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
-            
+            try{
+                int key = Integer.parseInt(tfSentenceNumber.getText());
+
+                String sentence = sentenceMap.get(key);
+                
+                if(sentence == null){
+                    lblStatus.setText("No sentence uses key " + key + ".");
+                } else{
+                    taOutput.setText(sentence);
+                    lblStatus.setText("Key " + key + " was found.");
+                }
+            } catch(NumberFormatException ex){
+                lblStatus.setText("Enter a valid whole-number key.");
+            }
         }
     }
-
-    private class BtnFindClickListener implements ActionListener {
+    
+    private class BtnLongestClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
             
