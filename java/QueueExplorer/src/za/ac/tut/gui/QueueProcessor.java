@@ -216,7 +216,24 @@ public class QueueProcessor extends JFrame{
     private class BtnLoadClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            String cleaned = taParagraph.getText()
+                    .toLowerCase()
+                    .replaceAll("[^a-z]", " ")
+                    .replaceAll("\\s+", " ")
+                    .trim();
             
+            if(!cleaned.isEmpty()){
+                lblStatus.setText("Enter a paragraph first.");
+                return;
+            }
+            String[] words = cleaned.split("\\s+");
+            
+            for (String word : words) {
+                wordQueue.offer(word);
+            }
+            
+            lblStatus.setText("Loaded " + wordQueue.size() 
+                    + " words. Front: " + wordQueue.peek());
         }
     }
 
