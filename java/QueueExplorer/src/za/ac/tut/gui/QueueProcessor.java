@@ -1,17 +1,27 @@
 
 package za.ac.tut.gui;
 //Import statements++++++++++++++++++++++++
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author S. X Mabuza
  */
-public class QueueProcessor {
+public class QueueProcessor extends JFrame{
     //Private members+++++++++++++++++++++++++++
     private JTextArea taParagraph;
     private JTextArea taResult;
@@ -28,4 +38,181 @@ public class QueueProcessor {
     private JButton btnClear;
     
     private Queue<String> wordQueue;
+    
+    //Constructor+++++++++++++++++++++
+     public QueueProcessor() {
+        // ========================================
+        // FRAME
+        // ========================================
+
+        setTitle("Paragraph Stack Explorer");
+        setSize(500, 650);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+
+        // ========================================
+        // CREATE COMPONENTS
+        // ========================================
+
+        taParagraph = new JTextArea(
+            "Queues process values in first-in-first-out order. "
+            + "\nA paragraph can be cleaned into words, "
+            + "and every word can join the rear of the queue."
+            + "\n The first word becomes the head item. "
+        );
+
+        taResult = new JTextArea();
+
+        this.tfWord = new JTextField();
+
+        lblStatus = new JLabel(
+            "Stack size: 0 | Stack is empty",
+            SwingConstants.CENTER
+        );
+
+
+        // ========================================
+        // BUTTONS
+        // ========================================
+
+        btnLoad = new JButton("Load Paragraph"); 
+        btnDisplay = new JButton("Display Queue"); 
+        this.btnProcessAll = new JButton("Process All"); 
+        this.btnOffer = new JButton("Offer Word"); 
+        this.btnFind = new JButton("Find Position"); 
+        btnPeek = new JButton("Peek Front"); 
+        this.btnPoll = new JButton("Poll Front"); 
+        btnClear = new JButton("Clear Queue");
+
+
+        // ========================================
+        // SOURCE PARAGRAPH PANEL
+        // ========================================
+
+        JPanel pnlParagraph = new JPanel(new BorderLayout());
+
+        pnlParagraph.setBorder(
+            BorderFactory.createTitledBorder("Source paragraph")
+        );
+
+        pnlParagraph.add(
+            new JScrollPane(taParagraph),
+            BorderLayout.CENTER
+        );
+
+        this.wordQueue = new LinkedList<>();
+        
+        /*this.btnLoad.addActionListener(new BtnLoadClickListener());
+        this.btnDisplay.addActionListener(new BtnDisplayClickListener());
+        this.btnOffer.addActionListener(new BtnOfferClickListener());
+        this.btnPeek.addActionListener(new BtnPeekClickListener());
+        this.btnPoll.addActionListener(new BtnPollClickListener());
+        this.btnFind.addActionListener(new BtnFindClickListener());
+        this.btnProcessAll.addActionListener(new BtnProcessAllClickListener());
+        this.btnClear.addActionListener(new BtnClearClickListener());*/
+
+        // ========================================
+        // TOP BUTTON PANEL
+        // ========================================
+
+        JPanel pnlTopButtons = new JPanel(new FlowLayout(FlowLayout.LEFT)); 
+        pnlTopButtons.add(this.btnLoad); 
+        pnlTopButtons.add(btnDisplay); 
+        pnlTopButtons.add(this.btnProcessAll);
+
+        // ========================================
+        // WORD INPUT PANEL
+        // ========================================
+
+        JPanel pnlWord = new JPanel(new BorderLayout(10, 0)); 
+        this.tfWord.setToolTipText("Enter a word..."); 
+        pnlWord.add( this.tfWord, BorderLayout.CENTER ); 
+        JPanel pnlWordButtons = new JPanel(new FlowLayout()); 
+        pnlWordButtons.add(this.btnOffer); 
+        pnlWordButtons.add(this.btnFind); 
+        pnlWord.add( pnlWordButtons, BorderLayout.EAST );
+
+        // ========================================
+        // STACK OPERATION BUTTON PANEL
+        // ========================================
+
+        JPanel pnlStackButtons = new JPanel(new FlowLayout(FlowLayout.LEFT)); 
+        pnlStackButtons.add(btnPeek); 
+        pnlStackButtons.add(this.btnPoll); 
+        pnlStackButtons.add(btnClear);
+
+        // ========================================
+        // STACK VISUALISATION / RESULT PANEL
+        // ========================================
+
+        JPanel pnlResult =
+                new JPanel(new BorderLayout());
+
+        pnlResult.setBorder(
+            BorderFactory.createTitledBorder(
+                "Stack visualisation / result"
+            )
+        );
+
+        taResult.setEditable(false);
+
+        pnlResult.add(
+            new JScrollPane(taResult),
+            BorderLayout.CENTER
+        );
+
+
+        // ========================================
+        // STATUS PANEL
+        // ========================================
+
+        JPanel pnlStatus =
+                new JPanel(new BorderLayout());
+
+        pnlStatus.add(
+            lblStatus,
+            BorderLayout.CENTER
+        );
+
+
+        // ========================================
+        // MAIN PANEL
+        // ========================================
+
+        JPanel mainPanel = new JPanel();
+
+        mainPanel.setLayout(
+            new BoxLayout(
+                mainPanel,
+                BoxLayout.Y_AXIS
+            )
+        );
+
+        mainPanel.add(pnlParagraph);
+        mainPanel.add(pnlTopButtons);
+        mainPanel.add(pnlWord);
+        mainPanel.add(pnlStackButtons);
+        mainPanel.add(pnlResult);
+        mainPanel.add(pnlStatus);
+
+
+        // ========================================
+        // ADD TO FRAME
+        // ========================================
+
+        add(mainPanel);
+
+
+        // ========================================
+        // SHOW FRAME
+        // ========================================
+
+        setVisible(true);
+    }
+
+   //Main method++++++++++++++++++++++++++++++++++++
+     public static void main(String[]args){
+         new QueueProcessor();
+     }
 }
