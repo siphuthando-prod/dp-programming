@@ -3,6 +3,7 @@ package za.ac.tut.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -131,7 +132,7 @@ public class MapProcessor extends JFrame{
         // WORD INPUT PANEL
         // ========================================
 
-        JPanel pnlWord = new JPanel(new BorderLayout(10, 0)); 
+        JPanel pnlWord = new JPanel(new GridLayout(2, 2, 10, 10)); 
         pnlWord.add(new JLabel("Sentence number:"));
         pnlWord.add(tfSentenceNumber);
 
@@ -142,7 +143,7 @@ public class MapProcessor extends JFrame{
         pnlWordButtons.add(this.btnFind); 
         pnlWordButtons.add(this.btnReplace); 
         pnlWordButtons.add(this.btnRemove); 
-        pnlWord.add( pnlWordButtons, BorderLayout.EAST );
+       // pnlWord.add( pnlWordButtons, BorderLayout.EAST );
 
         // ========================================
         // STACK OPERATION BUTTON PANEL
@@ -203,6 +204,7 @@ public class MapProcessor extends JFrame{
         mainPanel.add(pnlParagraph);
         mainPanel.add(pnlTopButtons);
         mainPanel.add(pnlWord);
+        mainPanel.add(pnlWordButtons);
         mainPanel.add(pnlMapButtons);
         mainPanel.add(pnlResult);
         mainPanel.add(pnlStatus);
@@ -283,20 +285,34 @@ public class MapProcessor extends JFrame{
         }
     }
     
+     private class BtnReplaceClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            try{
+                int key = Integer.parseInt(tfSentenceNumber.getText());
+                String replacement = tfReplacement.getText().trim();
+                
+                if(!sentenceMap.containsKey(key)){
+                    lblStatus.setText("Key does NOT exist");
+                } else if(replacement.isEmpty()){
+                    lblStatus.setText("Enter a replacement text.");
+                } else{
+                    sentenceMap.replace(key, replacement);
+                    lblStatus.setText("Key " + key + " was updated.");
+                }
+            } catch(NumberFormatException ex){
+                lblStatus.setText("Enter a valid key");
+            }
+        }
+    }
+     
     private class BtnLongestClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
             
         }
     }
-
-    private class BtnReplaceClickListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e){
-            
-        }
-    }
-
+ 
     private class BtnRemoveClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
