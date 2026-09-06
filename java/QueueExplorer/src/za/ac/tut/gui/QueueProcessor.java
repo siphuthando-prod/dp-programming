@@ -288,12 +288,17 @@ public class QueueProcessor extends JFrame{
     private class BtnDisplayClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            taResult.setText("");
             
+            int position = 1;
+            
+            for (String word : wordQueue) {
+                taResult.append(position + ". " + word + " \n");
+                position++;
+            }
         }
     }
-
     
-
     private class BtnFindClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
