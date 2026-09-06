@@ -324,6 +324,28 @@ public class MapProcessor extends JFrame{
             }
         }
      }
+     
+    private class BtnKeysClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            taOutput.setText("");
+            
+            for (Integer key : sentenceMap.keySet()) {
+                taOutput.append(key + "\n");
+            }
+        }
+    }
+
+    private class BtnValuesClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            taOutput.setText("");
+            
+            for (String sentence : sentenceMap.values()) {
+                taOutput.append(sentence + "\n");
+            }
+        }
+    }
     private class BtnLongestClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
@@ -331,20 +353,6 @@ public class MapProcessor extends JFrame{
         }
     }
  
-    private class BtnKeysClickListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e){
-            
-        }
-    }
-
-    private class BtnValuesClickListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e){
-            
-        }
-    }
-
     private class BtnClearClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
