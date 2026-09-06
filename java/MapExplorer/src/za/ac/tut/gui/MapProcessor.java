@@ -3,6 +3,8 @@ package za.ac.tut.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -58,7 +60,7 @@ public class MapProcessor extends JFrame{
         taParagraph = new JTextArea(
             "Data structures organise information for different purposes. "
             + " A HashMap associates one key with one value. "
-            + " Sentence numbers can become keys,"
+            + " \nSentence numbers can become keys,"
             + " while the sentences become values. Keys make direct retrieval possible."
         );
 
@@ -105,15 +107,15 @@ public class MapProcessor extends JFrame{
 
         this.sentenceMap = new HashMap<>();
         
-        /*this.btnBuild.addActionListener(new QueueProcessor.BtnBuildClickListener());
-        this.btnDisplay.addActionListener(new QueueProcessor.BtnDisplayClickListener());
-        this.btnLongest.addActionListener(new QueueProcessor.BtnLongestClickListener());
-        this.btnFind.addActionListener(new QueueProcessor.BtnFindClickListener());
-        this.btnReplace.addActionListener(new QueueProcessor.BtnReplaceClickListener());
-        this.btnRemove.addActionListener(new QueueProcessor.BtnRemoveClickListener());
-        this.btnKeys.addActionListener(new QueueProcessor.BtnKeysClickListener());
-        this.btnValues.addActionListener(new QueueProcessor.BtnValuesClickListener());
-        this.btnClear.addActionListener(new QueueProcessor.BtnClearClickListener());*/
+        this.btnBuild.addActionListener(new BtnBuildClickListener());
+        this.btnDisplay.addActionListener(new BtnDisplayClickListener());
+        this.btnLongest.addActionListener(new BtnLongestClickListener());
+        this.btnFind.addActionListener(new BtnFindClickListener());
+        this.btnReplace.addActionListener(new BtnReplaceClickListener());
+        this.btnRemove.addActionListener(new BtnRemoveClickListener());
+        this.btnKeys.addActionListener(new BtnKeysClickListener());
+        this.btnValues.addActionListener(new BtnValuesClickListener());
+        this.btnClear.addActionListener(new BtnClearClickListener());
 
         // ========================================
         // TOP BUTTON PANEL
@@ -219,8 +221,94 @@ public class MapProcessor extends JFrame{
         setVisible(true);
     }
 
-  //Main method++++++++++++++++++++++++++++++++
-    public static void main(String[]args){
-        new MapProcessor();
+    private class BtnBuildClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            sentenceMap.clear();
+            
+            String paragraph = taParagraph.getText()
+                    .replaceAll("\\s+", " ")
+                    .trim();
+            
+            if(paragraph.isEmpty()){
+                lblStatus.setText("Enter a paragraph first.");
+                return;
+            }
+            
+            String[] sentences = paragraph.split("[.!?]+");            
+            int key = 1;
+            
+            for (String sentence : sentences) {
+                String cleanedSentence = sentence.trim();
+                if(!cleanedSentence.isEmpty()){
+                    sentenceMap.put(key, cleanedSentence);
+                    key++;
+                }
+            }
+            
+            lblStatus.setText(sentenceMap.size() + " sentences mapped.");
+        }
     }
+
+    private class BtnDisplayClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnLongestClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnFindClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnReplaceClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnRemoveClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnKeysClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnValuesClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnClearClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+    
+    //Main method++++++++++++++++++++++++++++++++
+      public static void main(String[]args){
+          new MapProcessor();
+      }
+
 }
