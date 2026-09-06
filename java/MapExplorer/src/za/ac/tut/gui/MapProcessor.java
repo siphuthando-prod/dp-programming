@@ -373,7 +373,9 @@ public class MapProcessor extends JFrame{
     private class BtnClearClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
-            
+            sentenceMap.clear();
+            taOutput.setText("");
+            lblStatus.setText("The sentence map is empty.");
         }
     }
     
