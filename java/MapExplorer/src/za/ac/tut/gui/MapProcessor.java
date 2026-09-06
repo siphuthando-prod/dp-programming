@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import static javax.management.Query.gt;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -349,7 +350,23 @@ public class MapProcessor extends JFrame{
     private class BtnLongestClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            int longestKey = -1;
+            String longestSentence = "";
             
+            for (Map.Entry<Integer, String> entry : sentenceMap.entrySet()) {
+                if(entry.getValue().length() > longestSentence.length()){
+                    longestKey = entry.getKey();
+                    longestSentence = entry.getValue();
+                }
+            }
+            
+            if(longestKey == -1){
+                lblStatus.setText("The map is empty.");
+            } else{
+                taOutput.setText(longestSentence);
+                lblStatus.setText("Longest sentence uses key " + longestKey +
+                        " and has " + longestSentence.length() + " characters.");
+            }
         }
     }
  
