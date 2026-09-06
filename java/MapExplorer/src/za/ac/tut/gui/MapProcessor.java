@@ -306,6 +306,24 @@ public class MapProcessor extends JFrame{
         }
     }
      
+     private class BtnRemoveClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            try{
+                int key = Integer.parseInt(tfSentenceNumber.getText());
+                
+                String removed = sentenceMap.remove(key);
+                
+                if(removed == null){
+                    lblStatus.setText("Nothing was removed.");
+                } else{
+                    lblStatus.setText("Removed key " + key + ": " + removed);
+                }
+            } catch(NumberFormatException ex){
+                lblStatus.setText("Enter a valid key.");
+            }
+        }
+     }
     private class BtnLongestClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
@@ -313,13 +331,6 @@ public class MapProcessor extends JFrame{
         }
     }
  
-    private class BtnRemoveClickListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e){
-            
-        }
-    }
-
     private class BtnKeysClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
