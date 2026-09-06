@@ -271,6 +271,20 @@ public class QueueProcessor extends JFrame{
         }
     }
     
+    private class BtnPollClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            String removed = wordQueue.poll();
+            
+            if(removed == null){
+                lblStatus.setText("Cannot poll: Queue is empty.");
+            } else{
+                lblStatus.setText(removed + " was processed." 
+                                + wordQueue.size() + " words remain.");
+            }
+        }
+    }
+    
     private class BtnDisplayClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
@@ -278,12 +292,7 @@ public class QueueProcessor extends JFrame{
         }
     }
 
-    private class BtnPollClickListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e){
-            
-        }
-    }
+    
 
     private class BtnFindClickListener implements ActionListener {
         @Override
