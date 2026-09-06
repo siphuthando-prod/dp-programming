@@ -335,17 +335,19 @@ public class QueueProcessor extends JFrame{
             String processed = "";
             
             while(!copy.isEmpty()){
-                processed += processed + copy.poll() + "\n";
+                processed = processed + copy.poll() + "\n";
             }
             
-            taResult.setText(.trim());
+            taResult.setText(processed.trim());
         }
     }
 
     private class BtnClearClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
-            
+            wordQueue.clear();
+            taResult.setText("");
+            lblStatus.setText("The Queue has been cleared");
         }
     }
     
