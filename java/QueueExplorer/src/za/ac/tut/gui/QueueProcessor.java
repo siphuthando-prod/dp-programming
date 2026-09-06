@@ -216,13 +216,14 @@ public class QueueProcessor extends JFrame{
     private class BtnLoadClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            wordQueue.clear();
             String cleaned = taParagraph.getText()
                     .toLowerCase()
                     .replaceAll("[^a-z]", " ")
                     .replaceAll("\\s+", " ")
                     .trim();
             
-            if(!cleaned.isEmpty()){
+            if(cleaned.isEmpty()){
                 lblStatus.setText("Enter a paragraph first.");
                 return;
             }
@@ -236,22 +237,41 @@ public class QueueProcessor extends JFrame{
                     + " words. Front: " + wordQueue.peek());
         }
     }
-
-    private class BtnDisplayClickListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e){
-            
-        }
-    }
-
+    
     private class BtnOfferClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            String word = tfWord.getText()
+                    .toLowerCase()
+                    .replaceAll("[^a-z]", " ")
+                    .trim();
             
+            if(word.isEmpty()){
+                lblStatus.setText("Enter one valid word.");
+                return;
+            }
+            
+            boolean added = wordQueue.offer(word);
+            if(added){
+                lblStatus.setText(word + " joined the rear.");
+            }
         }
     }
-
+    
     private class BtnPeekClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            String front = wordQueue.peek();
+            
+            if(front == null){
+                lblStatus.setText("Cannot peek: Queue is empty.");
+            } else{
+                lblStatus.setText("Front word: " + front);
+            }
+        }
+    }
+    
+    private class BtnDisplayClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
             
