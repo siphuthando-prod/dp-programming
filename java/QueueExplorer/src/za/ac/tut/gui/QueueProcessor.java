@@ -3,6 +3,8 @@ package za.ac.tut.gui;
 //Import statements++++++++++++++++++++++++
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -103,14 +105,14 @@ public class QueueProcessor extends JFrame{
 
         this.wordQueue = new LinkedList<>();
         
-        /*this.btnLoad.addActionListener(new BtnLoadClickListener());
+        this.btnLoad.addActionListener(new BtnLoadClickListener());
         this.btnDisplay.addActionListener(new BtnDisplayClickListener());
         this.btnOffer.addActionListener(new BtnOfferClickListener());
         this.btnPeek.addActionListener(new BtnPeekClickListener());
         this.btnPoll.addActionListener(new BtnPollClickListener());
         this.btnFind.addActionListener(new BtnFindClickListener());
         this.btnProcessAll.addActionListener(new BtnProcessAllClickListener());
-        this.btnClear.addActionListener(new BtnClearClickListener());*/
+        this.btnClear.addActionListener(new BtnClearClickListener());
 
         // ========================================
         // TOP BUTTON PANEL
@@ -211,6 +213,62 @@ public class QueueProcessor extends JFrame{
         setVisible(true);
     }
 
+    private class BtnLoadClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnDisplayClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnOfferClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnPeekClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnPollClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnFindClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnProcessAllClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+
+    private class BtnClearClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    }
+    
    //Main method++++++++++++++++++++++++++++++++++++
      public static void main(String[]args){
          new QueueProcessor();
