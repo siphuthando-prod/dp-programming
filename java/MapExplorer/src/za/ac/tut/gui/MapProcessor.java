@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -253,7 +254,12 @@ public class MapProcessor extends JFrame{
     private class BtnDisplayClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            taOutput.setText("");
             
+            for (Map.Entry<Integer, String> entry : sentenceMap.entrySet()) {
+                taOutput.append("Key: " + entry.getKey() +
+                        " -> " + entry.getValue() + "\n");
+            }
         }
     }
 
