@@ -329,7 +329,16 @@ public class QueueProcessor extends JFrame{
     private class BtnProcessAllClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            Queue<String> copy = new LinkedList<>();
+            copy.addAll(wordQueue);
             
+            String processed = "";
+            
+            while(!copy.isEmpty()){
+                processed += processed + copy.poll() + "\n";
+            }
+            
+            taResult.setText(.trim());
         }
     }
 
