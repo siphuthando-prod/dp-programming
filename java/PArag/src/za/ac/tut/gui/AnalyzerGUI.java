@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.Stack;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -86,14 +87,33 @@ public class AnalyzerGUI extends JFrame{
                 uniqueWords.add(word);
             }
             
-            taOutput.setText("Unique words: " + uniqueWords);
+            taOutput.setText(uniqueWords.size() + " unique words found. | Unique words are: " 
+                    + uniqueWords);
         }
     }
 
     private class BtnReverseClick implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            String paragraph = taSample.getText()
+                    .toLowerCase()
+                    .replaceAll("[^a-z]", " ");
             
+            String[] words = paragraph.split("\\s+");
+            
+            Stack<String> wordStack = new Stack<>();
+            
+            for (String word : words) {
+                wordStack.push(word);
+            }
+            
+            String reversed = "";
+            
+            while(!wordStack.empty()) {
+                reversed += wordStack.pop() + " ";
+            }
+            
+            taOutput.setText(reversed);
         }
     }
 
