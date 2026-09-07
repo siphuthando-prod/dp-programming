@@ -5,7 +5,9 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import javax.swing.JButton;
@@ -120,7 +122,32 @@ public class AnalyzerGUI extends JFrame{
     private class BtnFindwordOccurrencesClick implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            String paragraph = taSample.getText()
+                    .toLowerCase()
+                    .replaceAll("[^a-z0-9]", " ");
             
+            paragraph = paragraph.replaceAll("\\s+", " ").trim();
+            
+            String[] words = paragraph.split("\\s+");
+            
+            Map<String, Integer> occurrences = new HashMap<>();
+            
+            for (String word : words) {
+                if(occurrences.containsKey(word)){
+                    int currentTotal = occurrences.get(word);
+                    occurrences.put(word, currentTotal + 1);
+                } else{
+                    occurrences.put(word, 1);
+                }
+            }
+            
+            String output = "";
+            
+            for (Map.Entry<String, Integer> entry : occurrences.entrySet()) {
+                output += entry.getKey() + " : " + entry.getValue() + "\n";
+            }
+            
+            taOutput.setText(output.trim());
         }
     }
     
