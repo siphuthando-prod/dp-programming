@@ -10,7 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;;
+import java.sql.ResultSet;
+import java.sql.SQLException;import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -211,7 +215,7 @@ public class EquipmentGUI extends JFrame{
             {"3", "Mechanical Keyboard", "Computer Science", "2022-05-18", "Used", "true", "950.00"}
         };
         
-        String url = "jdbc:derby://localhost:1527/LabDB";
+        String url = "jdbc:derby://localhost:1527/labData";
         String username = "app";
         String password = "app";
         try {
@@ -261,7 +265,34 @@ public class EquipmentGUI extends JFrame{
     private class BtnViewClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            String sql = "SELECT  EQUIPMENT_ID,NAME, "
+                    + "DEPARTMENT, PURCHASE_DATE, CONDITION, "
+                    + "IN_USE, PRICE "
+                    + "FROM LAB_EQUIPMENT "
+                    + "ORDER BY EQUIPMENT_ID";
             
+            tableModel.setRowCount(0);
+            try(Statement statement = connection.createStatement();
+                    ResultSet results = statement.executeQuery(sql)){
+                int totalRows = 0;
+                
+                while(results.next()){
+                    Object[] row = {
+                        results.getInt("EQUIPMENT_ID"), 
+                        results.getString("NAME"), 
+                        results.getString("DEPARTMENT"), 
+                        results.getDate("PURCHASE_DATE"), 
+                        results.getString("CONDITION"), 
+                        results.getBoolean("IN_USE"), 
+                        results.getDouble("PRICE")};
+                    tableModel.addRow(row);
+                    totalRows++;
+                }
+                
+                lblStatus.setText(totalRows + " records displayed.");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Database error: " + ex.getMessage());
+            }
         }
     }
 
