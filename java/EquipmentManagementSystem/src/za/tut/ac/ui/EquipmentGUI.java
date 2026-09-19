@@ -10,8 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 ;
@@ -299,7 +302,55 @@ public class EquipmentGUI extends JFrame{
     private class BtnAddClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            String name = tfName.getText().trim();
+            String department = tfDepartment.getText().trim();
+            String dateText = tfPurchaseDate.getText().trim();
+            String condition = (String) cmbCondition.getSelectedItem();
+            boolean inUse =ckbInUse.isSelected();
+            String priceText = tfPrice.getText().trim();
             
+            if(name.isEmpty() || department.isEmpty() || dateText.isEmpty() || priceText.isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Complete all required fields.");
+                return;
+            }
+            
+            try{
+                LocalDate purchaseDate = LocalDate.parse(dateText);
+                java.sql.Date sqlDate = java.sql.Date.valueOf(purchaseDate);
+                double price = Double.parseDouble(priceText);
+                
+                if(price < 0){
+                    JOptionPane.showMessageDialog(rootPane, "Price cannot be negative.");
+                    return;
+                }
+                
+                String sql = "INSERT INTO LAB_EQUIPMENT"
+                        + "(NAME, DEPARTMENT, PURCHASE_DATE,"
+                        + " CONDITION, IN_USE, PRICE) "
+                        + "VALUES (?, ?, ?, ?, ?, ?)";
+                
+                try(PreparedStatement ps = connection.prepareStatement(sql)){
+                    ps.setString(1, name);
+                    ps.setString(2, department);
+                    ps.setDate(3, sqlDate);
+                    ps.setString(4, condition);
+                    ps.setBoolean(5, inUse);
+                    ps.setDouble(6, price);
+                    
+                    int rows = ps.executeUpdate();
+                    if(rows == 1){
+                        lblStatus.setText("Equipment added successfully.");
+                        btnView.doClick();
+                        btnClear.doClick();
+                    }
+                }
+            } catch(DateTimeParseException ex){
+                JOptionPane.showMessageDialog(rootPane, "Enter date as yyyy-MM-dd.");
+            } catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(rootPane, "Enter a valid price.");
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(rootPane, "Database error: " + ex.getMessage());
+            }
         }
     }
 
