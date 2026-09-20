@@ -15,9 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -357,7 +354,22 @@ public class EquipmentGUI extends JFrame{
     private class BtnLoadSelectedClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            int selectedRow = tblEquipment.getSelectedRow();
             
+            if(selectedRow == -1){
+                JOptionPane.showMessageDialog(rootPane, "Select a table row first.");
+                return;
+            }
+            
+            tfEqipmentId.setText(tableModel.getValueAt(selectedRow, 0).toString());
+            tfName.setText(tableModel.getValueAt(selectedRow, 1).toString());
+            tfDepartment.setText(tableModel.getValueAt(selectedRow, 2).toString());
+            tfPurchaseDate.setText(tableModel.getValueAt(selectedRow, 3).toString());
+            cmbCondition.setSelectedItem(tableModel.getValueAt(selectedRow, 4).toString());
+            ckbInUse.setSelected((boolean)tableModel.getValueAt(selectedRow, 5));
+            tfPrice.setText(tableModel.getValueAt(selectedRow,6).toString());
+            
+            lblStatus.setText("Selected record loaded into form.");
         }
     }
 
