@@ -12,7 +12,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;import java.sql.Statement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import javax.swing.BorderFactory;
@@ -376,7 +377,50 @@ public class EquipmentGUI extends JFrame{
     private class BtnUpdateClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            if(tfEqipmentId.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Load selected record first.");
+                return;
+            }
             
+            int equipmentId = Integer.parseInt(tfEqipmentId.getText().trim());
+            String name = tfName.getText().trim();
+            String department = tfDepartment.getText().trim();
+            LocalDate date = LocalDate.parse(tfPurchaseDate.getText().trim());
+            java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+            String condition = (String)cmbCondition.getSelectedItem();
+            Boolean inUse = ckbInUse.isSelected();
+            Double price = Double.valueOf(tfPrice.getText().trim());
+            
+            int option = JOptionPane.showConfirmDialog(rootPane, "Delete equipment ID " +
+                                           equipmentId, "Confirm Delete", 
+                                           JOptionPane.YES_NO_OPTION);
+            if(option != JOptionPane.YES_OPTION){return;}
+            
+            String sql = "UPDATE LAB_EQUIPMENT "
+                    + "SET NAME = ?, DEPARTMENT = ?, "
+                    + "PURCHASE_DATE = ?, CONDITION = ?,"
+                    + "IN_USE = ?, PRICE = ? "
+                    + "WHERE EQUIPMENT_ID = ?";
+            
+            try(PreparedStatement ps = connection.prepareStatement(sql)){
+                ps.setString(1,name);
+                ps.setString(2, department);
+                ps.setDate(3, sqlDate);
+                ps.setString(4, condition);
+                ps.setBoolean(5, inUse);
+                ps.setDouble(6, price);
+                ps.setInt(7, equipmentId);
+                
+                int rows = ps.executeUpdate();
+                if(rows == 1){
+                    lblStatus.setText("Equipment added successfully.");
+                }
+                
+                btnView.doClick();
+                btnClear.doClick();
+            } catch(SQLException ex){
+                JOptionPane.showMessageDialog(rootPane, "Database Error: " + ex.getMessage());
+            }
         }
     }
 
