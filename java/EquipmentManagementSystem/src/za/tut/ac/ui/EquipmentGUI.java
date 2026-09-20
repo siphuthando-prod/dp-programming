@@ -391,7 +391,7 @@ public class EquipmentGUI extends JFrame{
             Boolean inUse = ckbInUse.isSelected();
             Double price = Double.valueOf(tfPrice.getText().trim());
             
-            int option = JOptionPane.showConfirmDialog(rootPane, "Delete equipment ID " +
+            int option = JOptionPane.showConfirmDialog(rootPane, "Update equipment ID " +
                                            equipmentId, "Confirm Update", 
                                            JOptionPane.YES_NO_OPTION);
             if(option != JOptionPane.YES_OPTION){return;}
@@ -458,14 +458,32 @@ public class EquipmentGUI extends JFrame{
     private class BtnClearClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            tfEqipmentId.setText("");
+            tfName.setText("");
+            tfDepartment.setText("");
+            tfPurchaseDate.setText("");
+            cmbCondition.setSelectedItem("New");
+            ckbInUse.setSelected(false);
+            tfPrice.setText("");
+            tblEquipment.clearSelection();
             
+            lblStatus.setText("Form cleared.");
         }
     }
 
     private class BtnExitClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            try {
+                if(connection != null && !connection.isClosed()){
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Error closing connection: " + 
+                        ex.getMessage());
+            }
             
+            System.exit(0);
         }
     }
     
