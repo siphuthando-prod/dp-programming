@@ -392,7 +392,7 @@ public class EquipmentGUI extends JFrame{
             Double price = Double.valueOf(tfPrice.getText().trim());
             
             int option = JOptionPane.showConfirmDialog(rootPane, "Delete equipment ID " +
-                                           equipmentId, "Confirm Delete", 
+                                           equipmentId, "Confirm Update", 
                                            JOptionPane.YES_NO_OPTION);
             if(option != JOptionPane.YES_OPTION){return;}
             
@@ -427,7 +427,31 @@ public class EquipmentGUI extends JFrame{
     private class BtnDeleteClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            if(tfEqipmentId.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Load a selected row first.");
+                return;
+            }
             
+            int equipmentId = Integer.parseInt(tfEqipmentId.getText().trim());
+            int option = JOptionPane.showConfirmDialog(rootPane, "Delete equipment ID "
+                                                + equipmentId + "?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+            if(option != JOptionPane.YES_OPTION){return;}
+            
+            String sql = "DELETE FROM LAB_EQUIPMENT "
+                    + "WHERE EQUIPMENT_ID = ?";
+            
+            try(PreparedStatement ps = connection.prepareStatement(sql)){
+                ps.setInt(1, equipmentId);
+                
+                int rows = ps.executeUpdate();
+                if(rows == 1){
+                    lblStatus.setText("Equipment deleted successfully.");
+                    btnView.doClick();
+                    btnClear.doClick();
+                }
+            } catch(SQLException ex){
+                JOptionPane.showMessageDialog(rootPane, "Database Error: " + ex.getMessage());
+            }
         }
     }
 
