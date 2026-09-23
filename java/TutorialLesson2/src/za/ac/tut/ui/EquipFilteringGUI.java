@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -225,7 +227,30 @@ public class EquipFilteringGUI extends JFrame{
     private class BtnViewAllClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            String sql = "SELECT * FROM APP.LAB_EQUIPMENT "
+                    + "ORDER BY EQUIPMENT_ID ";
             
+            tableModel.setRowCount(0);
+            try (PreparedStatement ps = connection.prepareStatement(sql);
+                        ResultSet rs = ps.executeQuery()){
+                int count = 0;
+                while(rs.next()){
+                    Object[] row = {rs.getInt("DEPARTMENT"),
+                                                    rs.getString("NAME"),
+                                                    rs.getString("DEPARTMENT"), 
+                                                    rs.getDate("PURCHASE_DATE"),
+                                                    rs.getString("CONDITION"),
+                                                    rs.getBoolean("IN_USE"),
+                                                    rs.getDouble("PRICE")};
+                    
+                    tableModel.addRow(row);
+                    count++;
+                }
+                lblStatus.setText("Status: " + count + " records found.");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Database error: "
+                        + ex.getMessage());
+            }
         }
     }
 
