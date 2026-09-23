@@ -235,7 +235,7 @@ public class EquipFilteringGUI extends JFrame{
                         ResultSet rs = ps.executeQuery()){
                 int count = 0;
                 while(rs.next()){
-                    Object[] row = {rs.getInt("DEPARTMENT"),
+                    Object[] row = {rs.getInt("EQUIPMENT_ID"),
                                                     rs.getString("NAME"),
                                                     rs.getString("DEPARTMENT"), 
                                                     rs.getDate("PURCHASE_DATE"),
@@ -257,7 +257,30 @@ public class EquipFilteringGUI extends JFrame{
     private class BtnSearchNameClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            String sql = "SELECT * FROM APP.LAB_EQUIPMENT "
+                    + "WHERE UPPER(NAME) LIKE ? "
+                    + "ORDER BY NAME";
             
+            tableModel.setRowCount(0);
+            String searchText = tfSearchName.getText().trim();
+            try {
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, "%" + searchText.toUpperCase() + "%");
+                ResultSet rs = ps.executeQuery();
+                int count = 0;
+                while(rs.next()){
+                    Object[] row = {rs.getInt("EQUIPMENT_ID"), rs.getString("NAME"), 
+                                                    rs.getString("DEPARTMENT"), rs.getDate("PURCHASE_DATE"), 
+                                                    rs.getString("CONDITION"), rs.getBoolean("IN_USE"), 
+                                                     rs.getDouble("PRICE")};
+                    tableModel.addRow(row);
+                    count++;
+                }
+                lblStatus.setText("Status: " + count + " records loaded.");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Database error: " 
+                        + ex.getMessage());
+            }
         }
     }
 
