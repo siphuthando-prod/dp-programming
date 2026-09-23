@@ -1,17 +1,23 @@
 
 package za.ac.tut.ui;
-
+//Import Statement++++++++++++++++++++++++++++++
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
@@ -111,16 +117,22 @@ public class EquipFilteringGUI extends JFrame{
         // Styling specific buttons to match colors/theme if desired
         btnViewAll.setBackground(new java.awt.Color(0, 102, 102));
         btnViewAll.setForeground(java.awt.Color.WHITE);
+        this.btnViewAll.setEnabled(false);
         btnSearchName.setBackground(new java.awt.Color(0, 102, 102));
         btnSearchName.setForeground(java.awt.Color.WHITE);
+        this.btnSearchName.setEnabled(false);
         btnFilterDepartment.setBackground(new java.awt.Color(0, 102, 102));
         btnFilterDepartment.setForeground(java.awt.Color.WHITE);
+        this.btnFilterDepartment.setEnabled(false);
         btnFilterCondition.setBackground(new java.awt.Color(0, 102, 102));
         btnFilterCondition.setForeground(java.awt.Color.WHITE);
+        this.btnFilterCondition.setEnabled(false);
         btnFilterPriceRange.setBackground(new java.awt.Color(0, 102, 102));
         btnFilterPriceRange.setForeground(java.awt.Color.WHITE);
+        this.btnFilterPriceRange.setEnabled(false);
         btnConnect.setBackground(new java.awt.Color(0, 102, 102));
         btnConnect.setForeground(java.awt.Color.WHITE);
+        //this.btnConnect.setEnabled(false);
         btnExit.setBackground(new java.awt.Color(153, 0, 0));
         btnExit.setForeground(java.awt.Color.WHITE);
         
@@ -186,7 +198,27 @@ public class EquipFilteringGUI extends JFrame{
     private class BtnConnectClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            String username = tfUsername.getText().trim();
+            char[] passwordChars = pfPassword.getPassword();
+            String password = new String(passwordChars);
+            String url = "jdbc:derby://localhost:1527/labData";
             
+            try {
+                connection = DriverManager.getConnection(url, username, password);
+                lblStatus.setText("Connected.");
+                btnConnect.setEnabled(false);
+                btnViewAll.setEnabled(true);
+                btnSearchName.setEnabled(true);
+                btnFilterDepartment.setEnabled(true);
+                btnFilterCondition.setEnabled(true);
+                btnFilterPriceRange.setEnabled(true);
+                
+            } catch (SQLException ex) {
+                lblStatus.setText("Status: Connection failed");
+                JOptionPane.showMessageDialog(rootPane, "Database error: " + ex.getMessage());
+            } finally{
+                Arrays.fill(passwordChars, ' ');
+            }
         }
     }
 
