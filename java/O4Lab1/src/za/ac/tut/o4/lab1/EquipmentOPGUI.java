@@ -21,6 +21,7 @@ public class EquipmentOPGUI extends JFrame {
     // Components requiring access outside the constructor for listeners
     private JButton btnConnect;
     private JLabel lblConnectionStatusValue;
+    private JLabel lblStatusMessage;
     private JButton btnViewRecords;
     private JButton btnAddEquipment;
     private JButton btnFindEquipment;
@@ -140,7 +141,7 @@ public class EquipmentOPGUI extends JFrame {
         JPanel pnlStatusBar = new JPanel();
         pnlStatusBar.setLayout(new BorderLayout());
 
-        JLabel lblStatusMessage = new JLabel("Ready");
+        lblStatusMessage = new JLabel("Ready");
         lblStatusMessage.setFont(new Font("Arial", Font.BOLD, 12));
         pnlStatusBar.add(lblStatusMessage, BorderLayout.WEST);
 
@@ -194,11 +195,37 @@ public class EquipmentOPGUI extends JFrame {
     }
 
     private class BtnViewRecordsListener implements ActionListener {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
             // TODO: Implement viewing all equipment records in the table
+            tableModelEquipment.setRowCount(0);
             
-            
+            String sql = "SELECT * FROM APP.EQUIPMENT "
+                    + "ORDER BY EQUIPMENT_ID";
+            try {
+                Statement stmnt = conn.createStatement();
+                ResultSet rs = stmnt.executeQuery(sql);
+                
+                while(rs.next()){
+                    Object[] row = {
+                        rs.getInt("EQUIPMENT_ID"),
+                        rs.getString("NAME"),
+                        rs.getString("DEPARTMENT"),
+                        rs.getDate("PURCHASE_DATE"),
+                        rs.getString("CONDITION"),
+                        rs.getBoolean("IN_USE"),
+                        rs.getDouble("PRICE")
+                    };
+                    
+                    tableModelEquipment.addRow(row);
+                }
+                
+                lblStatusMessage.setText("Displaying " + tableModelEquipment.getRowCount() + 
+                        " rows.");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Database Error: " 
+                        + ex.getMessage());
+            }
         }
     }
 
