@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -180,6 +182,7 @@ public class EquipmentOPGUI extends JFrame {
             
             try {
                 conn = DriverManager.getConnection(url, user, pass);
+                btnConnect.setEnabled(false);
                 lblConnectionStatusValue.setText("Connected!");
                 
                 btnViewRecords.setEnabled(true);
@@ -200,7 +203,7 @@ public class EquipmentOPGUI extends JFrame {
             // TODO: Implement viewing all equipment records in the table
             tableModelEquipment.setRowCount(0);
             
-            String sql = "SELECT * FROM APP.EQUIPMENT "
+            String sql = "SELECT * FROM APP.LAB_EQUIPMENT "
                     + "ORDER BY EQUIPMENT_ID";
             try {
                 Statement stmnt = conn.createStatement();
@@ -230,11 +233,93 @@ public class EquipmentOPGUI extends JFrame {
     }
 
     private class BtnAddEquipmentListener implements ActionListener {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
             // TODO: Implement adding a new equipment record
+            String name = JOptionPane.showInputDialog("Enter equipment name", 
+                    JOptionPane.YES_NO_CANCEL_OPTION);
             
+            if(name == null || name.trim().isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Empty entry/Cancelled.");
+                return;
+            }
             
+            String depTxt = JOptionPane.showInputDialog("Enter Department", 
+                    JOptionPane.YES_NO_CANCEL_OPTION);
+            
+            if(depTxt == null || depTxt.trim().isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Empty entry/Cancelled.");
+                return;
+            }
+            
+            String dateTxt = JOptionPane.showInputDialog("Enter Date(YYYY-MM-DD)", 
+                    JOptionPane.YES_NO_CANCEL_OPTION);
+            
+            if(dateTxt == null || dateTxt.trim().isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Empty entry/Cancelled.");
+                return;
+            }
+            
+            String conTxt = JOptionPane.showInputDialog("Enter equipment condition", 
+                    JOptionPane.YES_NO_CANCEL_OPTION);
+            
+            if(conTxt == null || conTxt.trim().isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Empty entry/Cancelled.");
+                return;
+            }
+            
+            String useTxt = JOptionPane.showInputDialog("Enter state of equipment", 
+                    JOptionPane.YES_NO_CANCEL_OPTION);
+            
+            if(useTxt == null ||useTxt.trim().isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Empty entry/Cancelled.");
+                return;
+            }
+            
+            boolean inUse =Boolean.parseBoolean(useTxt);
+            
+            String priceTxt = JOptionPane.showInputDialog("Enter equipment price", 
+                    JOptionPane.YES_NO_CANCEL_OPTION);
+            
+            if(priceTxt == null || Integer.parseInt(priceTxt) == 1 ||  Integer.parseInt(priceTxt) == 2){
+                JOptionPane.showMessageDialog(rootPane, "Empty entry/Cancelled.");
+                return;
+            } else if( Integer.parseInt(priceTxt) < 0){
+                JOptionPane.showMessageDialog(rootPane, "Negative price.");
+                return;
+            }
+            
+            try {
+                double price = Double.parseDouble(priceTxt);
+                
+                String sql = "INSERT INTO LAB_EQUIPMENT(NAME, DEPARTMENT,"
+                    + "PURCHASE_DATE, CONDITION, IN_USE, PRICE) "
+                        + "VALUES(?, ?, ?, ?, ?, ?)";
+                
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, name);
+                ps.setString(2, depTxt);
+                ps.setDate(3, java.sql.Date.valueOf(LocalDate.parse(dateTxt, 
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+                ps.setString(4, conTxt);
+                ps.setBoolean(5, inUse);
+                ps.setDouble(6, price);
+                
+                int row = ps.executeUpdate();
+                if(row > 0){
+                    JOptionPane.showMessageDialog(rootPane, row
+                            + " row(s) added successfully.");
+                    btnViewRecords.doClick();
+                } else{
+                    JOptionPane.showMessageDialog(rootPane, "NO row added.");
+                }
+            } catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(rootPane, "Number Error: " 
+                        + ex.getMessage());
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Database Error: " 
+                        + ex.getMessage());
+            }
         }
     }
 
