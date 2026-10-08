@@ -484,7 +484,7 @@ public class VehicleFleetApp extends JFrame {
                     tableModel.addRow(row);
                 }
                 
-                lblOperationStatus.setText(tableModel.getRowCount() 
+                lblRecordCount.setText(tableModel.getRowCount() 
                         + " row displayed.");
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
@@ -511,7 +511,7 @@ public class VehicleFleetApp extends JFrame {
                     row++;
                 }
                 
-                lblOperationStatus.setText(row + " branches loaded.");
+                lblRecordCount.setText(row + " branches loaded.");
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
             }
@@ -522,6 +522,39 @@ public class VehicleFleetApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Question 5: Filter by branch using SQL.
+            String branch = (String)cmbBranch.getSelectedItem();
+            
+            if(branch == null || branch.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Empty value.");
+                return;
+            }
+            
+            String sql = "SELECT * FROM FLEET_VEHICLE "
+                    + "WHERE BRANCH = ?";
+            try {
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, branch);                
+                ResultSet rs = ps.executeQuery();
+                tableModel.setRowCount(0);
+                
+                while(rs.next()){
+                    Object[] row = {
+                        rs.getInt("VEHICLE_ID"),
+                        rs.getString("MODEL"),
+                        rs.getString("BRANCH"),
+                        rs.getDate("REGISTRATION_DATE"),
+                        rs.getString("STATUS"),
+                        rs.getBoolean("IS_RENTED"),
+                        rs.getDouble("DAILY_RATE")
+                    };
+                    
+                    tableModel.addRow(row);
+                }
+                
+                lblRecordCount.setText(tableModel.getRowCount() + " vehicles in " + branch);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+            }
         }
     }
 
