@@ -109,6 +109,8 @@ public class VehicleFleetApp extends JFrame {
     private JButton btnDeleteRetired;
     private JButton btnExit;
     private JLabel lblOperationStatus;
+    
+    private ResultSet baseline;
 
     private static final Color TEAL = new Color(0, 121, 107);
     private static final Color BLUE = new Color(40, 123, 146);
@@ -438,7 +440,7 @@ public class VehicleFleetApp extends JFrame {
                     btnViewAll.doClick();
                     
                     tfBranch.setText("");
-                    tfDailyRate.setText("");
+                    tfDailyRate.setText("0.00");
                     tfModel.setText("");
                     chkRented.setSelected(false);
                 }
@@ -450,16 +452,43 @@ public class VehicleFleetApp extends JFrame {
                         + ex.getMessage(), "Database error"
                             , JOptionPane.ERROR_MESSAGE);
             }
-             
-            
-            
         }
     }
 
     private class BtnViewAllClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Question 3: View all and prepare the baseline ResultSet.
+            
+            try {
+                // Question 3: View all and prepare the baseline ResultSet.
+                Statement state = conn.createStatement(baseline.TYPE_SCROLL_SENSITIVE, 
+                        baseline.CONCUR_READ_ONLY);
+                
+                String sql = "SELECT * FROM FLEET_VEHICLE "
+                        + "ORDER BY VEHICLE_ID";
+                
+                baseline = state.executeQuery(sql);                
+                tableModel.setRowCount(0);
+                
+                while(baseline.next()){
+                    Object[] row = {
+                        baseline.getInt("VEHICLE_ID"),
+                        baseline.getString("MODEL"),
+                        baseline.getString("BRANCH"),
+                        baseline.getDate("REGISTRATION_DATE"),
+                        baseline.getString("STATUS"),
+                        baseline.getBoolean("IS_RENTED"),
+                        baseline.getDouble("DAILY_RATE")
+                    };
+                    
+                    tableModel.addRow(row);
+                }
+                
+                lblOperationStatus.setText(tableModel.getRowCount() 
+                        + " row displayed.");
+            } catch (SQLException ex) {
+                Logger.getLogger(VehicleFleetApp.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
