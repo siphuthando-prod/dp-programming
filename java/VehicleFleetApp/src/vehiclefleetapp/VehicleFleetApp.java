@@ -604,6 +604,31 @@ public class VehicleFleetApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Question 7: Send Durban vehicles registered in the selected month to Service.
+            int month = cmbMonth.getSelectedIndex() + 1;
+            if(month <= 0){
+                JOptionPane.showMessageDialog(null, "Invalid month", "Error", 
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            String sql = "UPDATE FLEET_VEHICLE "
+                    + "SET STATUS = 'Service',"
+                    + "IS_RENTED = false  "
+                    + "WHERE BRANCH = 'Durban' "
+                    + "AND MONTH(REGISTRATION_DATE) = ?";
+            try {
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setInt(1, month);
+                
+                int row = ps.executeUpdate();
+                if(row > 0){
+                    JOptionPane.showMessageDialog(null, row + " vehicle(s) updated.");
+                    btnViewAll.doClick();
+                }
+                
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+            }
         }
     }
 
