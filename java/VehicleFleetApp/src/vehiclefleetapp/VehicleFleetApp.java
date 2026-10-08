@@ -41,6 +41,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -353,7 +354,7 @@ public class VehicleFleetApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Question 1: Connect to the database.
-            String url = "jdbc:derby://localhost:1527/VehicleDB";
+            String url = "jdbc:derby://localhost:1527/FleetDB";
             
             String user = tfUsername.getText().trim();
             
@@ -395,6 +396,63 @@ public class VehicleFleetApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Question 2: Insert a vehicle using default values.
+            String model = tfModel.getText().trim();
+            String branch = tfBranch.getText().trim();
+            String priceTxt = tfDailyRate.getText().trim();
+            boolean rented = chkRented.isSelected();
+            
+            if(model.isEmpty() || branch.isEmpty() || priceTxt.isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Empty value(s)",
+                        "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            try{
+                double price = Double.parseDouble(priceTxt);
+                if(price < 0){
+                    JOptionPane.showMessageDialog(rootPane, "Daily rate cannot be negative.",
+                            "Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                
+                LocalDate date = LocalDate.now();
+                String status = "Active";
+                
+                String sql = "INSERT INTO FLEET_VEHICLE(MODEL, BRANCH, "
+                        + "REGISTRATION_DATE, STATUS, IS_RENTED, DAILY_RATE) "
+                        + "VALUES(?, ?, ?, ?, ?, ?)";
+                
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, model);
+                ps.setString(2, branch);
+                ps.setDate(3, java.sql.Date.valueOf(date));
+                ps.setString(4, status);
+                ps.setBoolean(5, rented);
+                ps.setDouble(6, price);
+                
+                int row = ps.executeUpdate();
+                
+                if(row == 1){
+                    JOptionPane.showMessageDialog(rootPane, "Vehicle inserted successfully");
+                    
+                    btnViewAll.doClick();
+                    
+                    tfBranch.setText("");
+                    tfDailyRate.setText("");
+                    tfModel.setText("");
+                    chkRented.setSelected(false);
+                }
+            } catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(rootPane, "Daily rate must be a decimal number.",
+                            "Error", JOptionPane.WARNING_MESSAGE);
+            } catch(SQLException ex){
+                JOptionPane.showMessageDialog(rootPane, "Database error: " 
+                        + ex.getMessage(), "Database error"
+                            , JOptionPane.ERROR_MESSAGE);
+            }
+             
+            
+            
         }
     }
 
