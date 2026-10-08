@@ -487,7 +487,7 @@ public class VehicleFleetApp extends JFrame {
                 lblOperationStatus.setText(tableModel.getRowCount() 
                         + " row displayed.");
             } catch (SQLException ex) {
-                Logger.getLogger(VehicleFleetApp.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
             }
         }
     }
@@ -496,6 +496,25 @@ public class VehicleFleetApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Question 4: Load unique branch names using SQL.
+            cmbBranch.removeAllItems();
+            
+            String sql = "SELECT DISTINCT BRANCH FROM FLEET_VEHICLE "
+                    + "ORDER BY BRANCH";
+            
+            try {
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+                
+                int row = 0;
+                while(rs.next()){
+                    cmbBranch.addItem(rs.getString("BRANCH"));
+                    row++;
+                }
+                
+                lblOperationStatus.setText(row + " branches loaded.");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+            }
         }
     }
 
@@ -545,6 +564,7 @@ public class VehicleFleetApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Question 10B: Close resources and exit.
+            System.exit(0);
         }
     }
 
