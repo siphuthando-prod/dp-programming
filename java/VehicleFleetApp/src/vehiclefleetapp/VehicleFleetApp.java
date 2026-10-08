@@ -562,6 +562,41 @@ public class VehicleFleetApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Question 6: Filter models using the existing ResultSet.
+            String model = tfModelSearch.getText().toLowerCase();
+            if(model == null || model.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Empty value", "Error", 
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            try {
+                if(!baseline.isClosed()){
+                    tableModel.setRowCount(0);
+                    
+                    baseline.beforeFirst();
+                    while(baseline.next()){
+                        String mod = baseline.getString("MODEL");
+                        if(mod.toLowerCase().contains(model)){
+                            Object[] row = {
+                                baseline.getInt("VEHICLE_ID"),
+                                baseline.getString("MODEL"),
+                                baseline.getString("BRANCH"),
+                                baseline.getDate("REGISTRATION_DATE"),
+                                baseline.getString("STATUS"),
+                                baseline.getBoolean("IS_RENTED"),
+                                baseline.getDouble("DAILY_RATE")
+                            };
+                            
+                            tableModel.addRow(row);
+                        }
+                    }
+                    
+                    lblRecordCount.setText("Records displayed: " + tableModel.getRowCount());
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+            }
+            
         }
     }
 
