@@ -623,6 +623,8 @@ public class VehicleFleetApp extends JFrame {
                 int row = ps.executeUpdate();
                 if(row > 0){
                     JOptionPane.showMessageDialog(null, row + " vehicle(s) updated.");
+                    lblOperationStatus.setText(row + " Durban vehicle(s) registered in " + 
+                            (String)cmbMonth.getItemAt(month - 1) + " need to Service");
                     btnViewAll.doClick();
                 }
                 
@@ -636,6 +638,30 @@ public class VehicleFleetApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Question 8: Delete retired vehicles that are not rented.
+            int confirm = JOptionPane.showConfirmDialog(null, "Delete All vehicles that are Retired and not rented.",
+                    "Remove Vehicles", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+            if(confirm != JOptionPane.YES_OPTION){
+                lblOperationStatus.setText("Delete cancelled - no records changed.");
+                return;
+            }
+            
+            String sql = "DELETE  FROM  FLEET_VEHICLE "
+                    + "WHERE STATUS = 'Retired' "
+                    + "AND IS_RENTED = false";
+            try {
+                PreparedStatement ps = conn.prepareStatement(sql);
+                int row = ps.executeUpdate();
+                
+                if(row > 0){
+                    JOptionPane.showMessageDialog(null, row + " vehicle(s) deleted.");
+                    lblOperationStatus.setText("Operational Status: " + row + " vehicle(s) deleted.");
+                    btnViewAll.doClick();
+                }
+                
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+            }
         }
     }
 
