@@ -41,6 +41,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -668,7 +669,56 @@ public class VehicleFleetApp extends JFrame {
     private class BtnLoadDashboardClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Question 9: Load the five dashboard metrics.
+            try {
+                // Question 9: Load the five dashboard metrics.
+                String sql = "SELECT COUNT(VEHICLE_ID) AS TOT_VEHICLES, "
+                        + "AVG(DAILY_RATE) AS AVERAGE, "
+                        + "COUNT(DISTINCT (BRANCH)) AS TOT_BRANCHES,"
+                        + "MIN(DAILY_RATE) AS MIN_RATE,"
+                        + "MAX(DAILY_RATE) AS MAX_RATE FROM FLEET_VEHICLE";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+                
+                int totalVehicle = 0, totalBranches = 0;
+                double averageRate = 0.0, minRate = 0.0, maxRate = 0.0;
+                String minModel = "", maxModel = "";
+                while(rs.next()){
+                    totalVehicle = rs.getInt("TOT_VEHICLES");
+                    averageRate = rs.getDouble("AVERAGE");
+                    totalBranches = rs.getInt("TOT_BRANCHES");
+                    minRate = rs.getDouble("MIN_RATE");
+                    maxRate = rs.getDouble("MAX_RATE");        
+                    
+                    PreparedStatement ps = conn.prepareStatement("SELECT MODEL "
+                        + "FROM FLEET_VEHICLE "
+                        + "WHERE DAILY_RATE = ?");
+                    ps.setDouble(1, minRate);
+                    ResultSet set = ps.executeQuery();
+                    if(set.next()){
+                        minModel = set.getString("MODEL");                        
+                    }
+                    
+                    PreparedStatement pr = conn.prepareStatement("SELECT MODEL "
+                        + "FROM FLEET_VEHICLE "
+                        + "WHERE DAILY_RATE = ?");
+                    pr.setDouble(1, maxRate);
+                    ResultSet rt = pr.executeQuery();
+                    if(rt.next()){
+                        maxModel = rt.getString("MODEL");
+                    }
+                    
+                }
+                
+                DecimalFormat df = new DecimalFormat("R###,###.00");
+                lblTotalVehicles.setText(totalVehicle + "");
+                lblAverageRate.setText(df.format(averageRate) + "");
+                lblTotalBranches.setText(totalBranches + "");
+                lblCheapest.setText(minModel + " - " + df.format(minRate));
+                lblMostExpensive.setText(maxModel + " - " + df.format(maxRate));
+                
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+            }
         }
     }
 
@@ -676,6 +726,7 @@ public class VehicleFleetApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Question 10A: Clear only visible results.
+           
         }
     }
 
