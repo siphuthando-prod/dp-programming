@@ -20,9 +20,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.border.LineBorder;
@@ -320,7 +322,60 @@ public class ST22026GUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             //WRITE YOUR CODE HERE
             
+            String name = JOptionPane.showInputDialog(rootPane, "Enter name of equipment", 
+                    "Input", JOptionPane.QUESTION_MESSAGE);            
+            if(name == null || name.trim().isEmpty()){
+                return;
+            }
             
+            String department = JOptionPane.showInputDialog(rootPane, "Enter department to which the equipment belongs", 
+                    "Input", JOptionPane.QUESTION_MESSAGE);            
+            if(department == null || department.trim().isEmpty()){
+                return;
+            }
+            
+            String[] cond = {"New", "Used", "Damaged"};
+            Icon icon = null;
+            
+            String condition = (String) JOptionPane.showInputDialog(rootPane, "Choose option", "Condition menu", 
+                    JOptionPane.QUESTION_MESSAGE, icon, cond, cond[0]);
+            
+            String priceTxt = JOptionPane.showInputDialog(rootPane, "Enter price of equipment", 
+                    "Input", JOptionPane.QUESTION_MESSAGE);            
+            if(priceTxt == null || priceTxt.trim().isEmpty()){
+                return;
+            }
+            
+            boolean in_use = false;
+            LocalDate date = LocalDate.now();
+            
+            String sql = "INSERT INTO LAB_EQUIPMENT(NAME, DEPARTMENT, "
+                    + "PURCHASE_DATE, CONDITION, IN_USE, PRICE) "
+                    + "VALUES(?,?,?,?,?,?)";
+            
+            try(PreparedStatement ps =  conn.prepareStatement(sql)){
+                
+                double price = Double.parseDouble(priceTxt);
+                
+                ps.setString(1, name);
+                ps.setString(2, department);
+                ps.setDate(3, java.sql.Date.valueOf(date));
+                ps.setString(4, condition);
+                ps.setBoolean(5, in_use);
+                ps.setDouble(6, price);
+                
+                int row = ps.executeUpdate();
+                
+                if(row > 0){
+                    JOptionPane.showMessageDialog(rootPane, "New equipment added.");
+                    btnViewRecords.doClick();
+                }
+                
+            } catch(SQLException ex){
+                JOptionPane.showMessageDialog(rootPane, "Database error: " + ex.getMessage());
+            } catch(NumberFormatException ex){
+                JOptionPane.showConfirmDialog(rootPane, ex.getMessage());
+            }
             
         }
     }
