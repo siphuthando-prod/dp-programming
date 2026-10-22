@@ -294,7 +294,21 @@ public class ST22026GUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             //WRITE YOUR CODE HERE
+            String sql = "UPDATE LAB_EQUIPMENT "
+                    + "SET CONDITION = 'Used' "
+                    + "WHERE DEPARTMENT = 'Informatics'";
             
+            try(PreparedStatement ps = conn.prepareStatement(sql)){
+                int row = ps.executeUpdate();
+                
+                if(row > 0){
+                    JOptionPane.showMessageDialog(rootPane, row + " equipment(s) in Informatics are now set to Used");
+                    btnViewRecords.doClick();
+                }
+                
+            } catch(SQLException ex){
+                JOptionPane.showMessageDialog(rootPane, "Database error: " + ex.getMessage());
+            }
             
         }
     }
