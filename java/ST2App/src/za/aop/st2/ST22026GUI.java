@@ -23,6 +23,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
@@ -259,7 +260,29 @@ public class ST22026GUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             //WRITE YOUR CODE HERE
+            String sql = "SELECT * FROM LAB_EQUIPMENT "
+                    + "ORDER BY EQUIPMENT_ID";
             
+            tblData.setRowCount(0);
+            
+            try(Statement state = conn.createStatement();
+                    ResultSet rs = state.executeQuery(sql)){
+                while(rs.next()){
+                    Object[] row = {
+                        rs.getInt("EQUIPMENT_ID"),
+                        rs.getString("NAME"),
+                        rs.getString("DEPARTMENT"),
+                        rs.getDate("PURCHASE_DATE"),
+                        rs.getString("CONDITION"),
+                        rs.getBoolean("IN_USE"),
+                        rs.getDouble("PRICE")
+                    };
+                    
+                    tblData.addRow(row);
+                }
+            } catch(SQLException ex){
+                JOptionPane.showMessageDialog(rootPane, "Database error: " + ex.getMessage());
+            }
             
         }
 
