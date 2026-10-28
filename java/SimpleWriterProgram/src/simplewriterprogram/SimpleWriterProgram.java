@@ -25,9 +25,17 @@ public class SimpleWriterProgram {
         
         if(option == JFileChooser.OPEN_DIALOG){            
             try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))){
-                bw.write("S Mabuza");
+                bw.write("Surname: Mabuza");
                 bw.newLine();
-                bw.write("https://www.github.com/siphuthando-prod/");
+                
+                bw.write("Initials: S. X");
+                bw.newLine();
+                
+                bw.write("GitHub: https://www.github.com/siphuthando-prod/");
+                bw.newLine();
+                
+                bw.write("LinkedIn: https://www.linkedin.com/in/siphuthando-mabuza-228abb433/");
+                bw.write("");
             } catch(Exception ex){
                 System.out.println(ex.getMessage());
             }
